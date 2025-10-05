@@ -1,139 +1,80 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
-import 'package:go_router/go_router.dart';
-import 'package:social_media/core/utils/app_colors.dart';
-import 'package:social_media/core/utils/app_router.dart';
-import 'package:social_media/core/utils/assets_data.dart';
+import 'package:social_media/features/authentication/presentation/views/widgets/custom_button.dart';
+import 'package:social_media/features/authentication/presentation/views/widgets/email_text_form_field.dart';
+import 'package:social_media/features/authentication/presentation/views/widgets/logo.dart';
+import 'package:social_media/features/authentication/presentation/views/widgets/password_text_form_field.dart';
+import 'package:social_media/features/authentication/presentation/views/widgets/register_now_widget.dart';
+import 'package:social_media/features/authentication/presentation/views/widgets/widget_0616.dart';
 
-class LoginViewBody extends StatelessWidget {
+class LoginViewBody extends StatefulWidget {
   const LoginViewBody({super.key});
+
+  @override
+  State<LoginViewBody> createState() => _LoginViewBodyState();
+}
+
+class _LoginViewBodyState extends State<LoginViewBody> {
+  final _formKey = GlobalKey<FormState>();
+  late TextEditingController emailController;
+  late TextEditingController passwordController;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
+  }
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            const SizedBox(height: 100),
-            Center(
-              child: SvgPicture.asset(
-                AssetsData.nLogo,
-                width: 150,
-                height: 150,
-                colorFilter: ColorFilter.mode(
-                  AppColors.kPrimaryColor,
-                  BlendMode.srcIn,
-                ),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              const Gap(100),
+              Logo(),
+              Gap(20),
+              Widget0616(),
+              Gap(20),
+              const Text('Welcome Back', style: TextStyle(fontSize: 24)),
+              Gap(30),
+              EmailTextFormField(
+                controller: emailController,
+                onSaved: emailOnSavedMethod,
               ),
-            ),
-            Gap(20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text("06", style: TextStyle(fontWeight: FontWeight.bold)),
-                Text(
-                  "16",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.kPrimaryColor,
-                    fontSize: 20,
-                  ),
-                ),
-              ],
-            ),
-            Gap(20),
-            const Text('Welcome Back', style: TextStyle(fontSize: 24)),
-            Gap(30),
-            TextFormField(
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                prefixIcon: Icon(Icons.email),
-                hintText: 'Email',
-                fillColor: AppColors.kWhiteColor,
-                filled: true,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: BorderSide.none,
-                ),
-
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: BorderSide(color: AppColors.kPrimaryColor),
-                ),
+              Gap(20),
+              PasswordTextFormField(
+                controller: passwordController,
+                onSaved: passwordOnSavedMethod,
               ),
-            ),
-            Gap(20),
-
-            TextFormField(
-              decoration: InputDecoration(
-                prefixIcon: Icon(Icons.password),
-                hintText: 'Password',
-                fillColor: AppColors.kWhiteColor,
-                filled: true,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: BorderSide.none,
-                ),
-
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: BorderSide(color: AppColors.kPrimaryColor),
-                ),
-              ),
-            ),
-            Gap(30),
-            Row(
-              children: [
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.kPrimaryColor,
-                      padding: EdgeInsets.all(16),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                    ),
-                    child: Text(
-                      "Login".toUpperCase(),
-                      style: TextStyle(
-                        color: AppColors.kWhiteColor,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Gap(30),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
-                  "Don't have an account?",
-                  style: TextStyle(fontSize: 16),
-                ),
-                Gap(10),
-                InkWell(
-                  onTap: () {
-                    GoRouter.of(context).push(AppRouter.kRegister);
-                  },
-                  child: const Text(
-                    "Register now",
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: AppColors.kPrimaryColor,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
+              Gap(30),
+              CustomButton(onPressed: () {}, text: 'login'),
+              Gap(30),
+              RegisterNowWidget(),
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  void emailOnSavedMethod(String? value) {
+    emailController.text = value ?? '';
+  }
+
+  void passwordOnSavedMethod(String? value) {
+    passwordController.text = value ?? '';
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
   }
 }
