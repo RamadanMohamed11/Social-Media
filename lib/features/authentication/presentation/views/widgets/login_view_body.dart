@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:social_media/constants.dart';
 import 'package:social_media/features/authentication/presentation/views/widgets/custom_button.dart';
 import 'package:social_media/features/authentication/presentation/views/widgets/email_text_form_field.dart';
 import 'package:social_media/features/authentication/presentation/views/widgets/logo.dart';
@@ -29,34 +30,35 @@ class _LoginViewBodyState extends State<LoginViewBody> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              const Gap(100),
-              Logo(),
-              Gap(20),
-              Widget0616(),
-              Gap(20),
-              const Text('Welcome Back', style: TextStyle(fontSize: 24)),
-              Gap(30),
-              EmailTextFormField(
-                controller: emailController,
-                onSaved: emailOnSavedMethod,
-              ),
-              Gap(20),
-              PasswordTextFormField(
-                controller: passwordController,
-                onSaved: passwordOnSavedMethod,
-              ),
-              Gap(30),
-              CustomButton(onPressed: () {}, text: 'login'),
-              Gap(30),
-              RegisterNowWidget(),
-            ],
+    return Center(
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(kDefaultPadding),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                Logo(),
+                Gap(20),
+                Widget0616(),
+                Gap(20),
+                const Text('Welcome Back', style: TextStyle(fontSize: 24)),
+                Gap(30),
+                EmailTextFormField(
+                  controller: emailController,
+                  onSaved: emailOnSavedMethod,
+                ),
+                Gap(20),
+                PasswordTextFormField(
+                  controller: passwordController,
+                  onSaved: passwordOnSavedMethod,
+                ),
+                Gap(30),
+                CustomButton(onPressed: () {}, text: 'login'),
+                Gap(30),
+                RegisterNowWidget(isLogin: true),
+              ],
+            ),
           ),
         ),
       ),

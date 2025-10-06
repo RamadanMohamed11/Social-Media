@@ -30,4 +30,14 @@ abstract class TextFormFiledValidations {
     }
     return null;
   }
+
+  static String? usernameValidation(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter your username';
+    }
+    if (value.length < 2) {
+      return 'Username must be at least 2 characters long';
+    }
+    return null;
+  }
 }
