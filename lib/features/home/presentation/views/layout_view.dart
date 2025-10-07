@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:social_media/core/models/user_model.dart';
 import 'package:social_media/core/utils/app_colors.dart';
+import 'package:social_media/features/add/presentation/views/add_view.dart';
+import 'package:social_media/features/home/presentation/views/home_view.dart';
+import 'package:social_media/features/profile/presentation/views/profile_view.dart';
+import 'package:social_media/features/search/presentation/views/search_view.dart';
 
 class LayoutView extends StatefulWidget {
   const LayoutView({super.key, required this.userModel});
@@ -12,6 +16,22 @@ class LayoutView extends StatefulWidget {
 
 class _LayoutViewState extends State<LayoutView> {
   int selectedIndex = 0;
+  late List<Widget> myPages;
+  late PageController pageController;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    pageController = PageController();
+    myPages = [
+      HomeView(userModel: widget.userModel),
+      AddView(),
+      SearchView(),
+      ProfileView(),
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,6 +42,7 @@ class _LayoutViewState extends State<LayoutView> {
         indicatorColor: AppColors.kPrimaryColor.withValues(alpha: 0.2),
         onDestinationSelected: (value) {
           selectedIndex = value;
+          pageController.jumpToPage(value);
           setState(() {});
         },
         destinations: [
@@ -50,6 +71,21 @@ class _LayoutViewState extends State<LayoutView> {
           ),
         ],
       ),
+      body: PageView(
+        controller: pageController,
+        onPageChanged: (value) {
+          selectedIndex = value;
+          setState(() {});
+        },
+        children: myPages,
+      ),
     );
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    pageController.dispose();
   }
 }
