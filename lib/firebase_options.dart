@@ -17,7 +17,10 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -25,9 +28,15 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
-        return windows;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for windows - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -40,49 +49,20 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBfEUGeayCzIjF6e04ZOmVudp2KGLLdhV8',
-    appId: '1:30667587127:web:1ee7e9fc2c0d81689dc9b2',
-    messagingSenderId: '30667587127',
-    projectId: 'social-media-f36b8',
-    authDomain: 'social-media-f36b8.firebaseapp.com',
-    storageBucket: 'social-media-f36b8.firebasestorage.app',
-    measurementId: 'G-508LEBEX43',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDMkFW_80JRR8n5Ynv5CJZ1reowLuRnSls',
-    appId: '1:30667587127:android:5a4baffd4bd4af069dc9b2',
-    messagingSenderId: '30667587127',
-    projectId: 'social-media-f36b8',
-    storageBucket: 'social-media-f36b8.firebasestorage.app',
+    apiKey: 'AIzaSyAqlfz_Npidw34GU7ycYXJfKF6aW6MpLI4',
+    appId: '1:749256210227:android:04d4f5370ad9f0cbc83046',
+    messagingSenderId: '749256210227',
+    projectId: 'social-media-1a202',
+    storageBucket: 'social-media-1a202.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCbJqn8dYmkQox1xkOiFqbBdPc67F0n82Q',
-    appId: '1:30667587127:ios:e5adb959aaaa30459dc9b2',
-    messagingSenderId: '30667587127',
-    projectId: 'social-media-f36b8',
-    storageBucket: 'social-media-f36b8.firebasestorage.app',
+    apiKey: 'AIzaSyCCezAWYWX5mhyLh8214YHs0BRmtX9KCHg',
+    appId: '1:749256210227:ios:50e7580ed5b27529c83046',
+    messagingSenderId: '749256210227',
+    projectId: 'social-media-1a202',
+    storageBucket: 'social-media-1a202.firebasestorage.app',
     iosBundleId: 'com.example.socialMedia',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyCbJqn8dYmkQox1xkOiFqbBdPc67F0n82Q',
-    appId: '1:30667587127:ios:e5adb959aaaa30459dc9b2',
-    messagingSenderId: '30667587127',
-    projectId: 'social-media-f36b8',
-    storageBucket: 'social-media-f36b8.firebasestorage.app',
-    iosBundleId: 'com.example.socialMedia',
-  );
-
-  static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyBfEUGeayCzIjF6e04ZOmVudp2KGLLdhV8',
-    appId: '1:30667587127:web:ae41c591fec9c5c79dc9b2',
-    messagingSenderId: '30667587127',
-    projectId: 'social-media-f36b8',
-    authDomain: 'social-media-f36b8.firebaseapp.com',
-    storageBucket: 'social-media-f36b8.firebasestorage.app',
-    measurementId: 'G-B858MFJD0E',
   );
 }

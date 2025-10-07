@@ -1,4 +1,6 @@
-import 'package:social_media/features/authentication/data/models/user_model.dart';
+import 'dart:developer';
+
+import 'package:social_media/core/models/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -7,23 +9,24 @@ class AuthenticationService {
   final CollectionReference _usersCollection = FirebaseFirestore.instance
       .collection('users');
 
-  void storeUser(
+  Future<void> storeUser(
     UserCredential userCredential,
     String name,
     String email,
     String username,
-  ) {
+  ) async {
     UserModel user = UserModel(
       id: userCredential.user!.uid,
       email: email,
       name: name,
-      image: "",
+      profileImage: "",
       bio: "",
       username: username,
       followers: [],
       following: [],
     );
-    _usersCollection.doc(user.id).set(user.toJson());
+    log('Storing user: ${user.toJson()}');
+    await _usersCollection.doc(user.id).set(user.toJson());
   }
 
   Future<void> signUp({
@@ -32,23 +35,25 @@ class AuthenticationService {
     required String name,
     required String username,
   }) async {
-    try {
-      UserCredential userCredential = await _firebaseAuth
-          .createUserWithEmailAndPassword(email: email, password: password);
-      storeUser(userCredential, name, email, username);
-    } catch (e) {
-      print("Error signing up: $e");
-    }
+    UserCredential userCredential = await _firebaseAuth
+        .createUserWithEmailAndPassword(email: email, password: password);
+    await storeUser(userCredential, name, email, username);
   }
 
-  Future<void> signIn({required String email, required String password}) async {
-    try {
-      await _firebaseAuth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-    } catch (e) {
-      print("Error signing in: $e");
+  Future<UserModel?> signIn({
+    required String email,
+    required String password,
+  }) async {
+    await _firebaseAuth.signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+    DocumentSnapshot userDoc = await _usersCollection
+        .doc(_firebaseAuth.currentUser!.uid)
+        .get();
+    if (userDoc.exists) {
+      return UserModel.fromSnap(userDoc);
     }
+    return null;
   }
 }
