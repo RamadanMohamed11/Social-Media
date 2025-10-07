@@ -43,7 +43,7 @@ class _LoginViewBodyState extends State<LoginViewBody> {
             if (userModel != null) {
               GoRouter.of(
                 context,
-              ).pushReplacement(AppRouter.kHome, extra: userModel);
+              ).pushReplacement(AppRouter.kLayoutView, extra: userModel);
             }
           }
         },
