@@ -43,6 +43,8 @@ class AuthRepoImpl implements AuthRepo {
         password: password,
       );
       return Right(userModel!);
+    } on FirebaseAuthException catch (e) {
+      return Left(AuthFailure.fromFirebaseAuthException(e));
     } catch (e) {
       return Left(AuthFailure(e.toString()));
     }

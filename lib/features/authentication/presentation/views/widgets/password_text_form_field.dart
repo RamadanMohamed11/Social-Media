@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:social_media/core/utils/app_colors.dart';
 
-class PasswordTextFormField extends StatelessWidget {
+class PasswordTextFormField extends StatefulWidget {
   const PasswordTextFormField({
     super.key,
     required this.controller,
@@ -11,12 +11,27 @@ class PasswordTextFormField extends StatelessWidget {
   final void Function(String?)? onSaved;
 
   @override
+  State<PasswordTextFormField> createState() => _PasswordTextFormFieldState();
+}
+
+class _PasswordTextFormFieldState extends State<PasswordTextFormField> {
+  bool isObsecure = true;
+
+  @override
   Widget build(BuildContext context) {
     return TextFormField(
-      onSaved: onSaved,
-      controller: controller,
+      obscureText: isObsecure,
+      onSaved: widget.onSaved,
+      controller: widget.controller,
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.password),
+        suffixIcon: IconButton(
+          onPressed: () {
+            isObsecure = !isObsecure;
+            setState(() {});
+          },
+          icon: Icon(isObsecure ? Icons.visibility : Icons.visibility_off),
+        ),
         hintText: 'Password',
         fillColor: AppColors.kWhiteColor,
         filled: true,

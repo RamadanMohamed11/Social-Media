@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:social_media/core/models/user_model.dart';
 import 'package:social_media/core/utils/authentication_service.dart';
 import 'package:social_media/features/authentication/data/repos/auth_repo.dart';
 
@@ -40,15 +41,20 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     );
   }
 
-  Future<void> signIn({required String email, required String password}) async {
+  Future<UserModel?> signIn({
+    required String email,
+    required String password,
+  }) async {
     emit(AuthenticationLoading());
     var result = await authRepo.signIn(email: email, password: password);
-    result.fold(
+    return result.fold(
       (failure) {
         emit(AuthenticationFailure(failure.errorMessage));
+        return null;
       },
-      (success) {
+      (userResult) {
         emit(AuthenticationLoginSuccess());
+        return userResult;
       },
     );
   }

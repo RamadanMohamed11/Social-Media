@@ -7,8 +7,8 @@ class UserModel {
   final String username;
   final String profileImage;
   final String bio;
-  final List<String> followers;
-  final List<String> following;
+  final List<dynamic> followers;
+  final List<dynamic> following;
 
   UserModel({
     required this.id,

@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 import 'package:social_media/constants.dart';
+import 'package:social_media/core/models/user_model.dart';
+import 'package:social_media/core/utils/app_router.dart';
+import 'package:social_media/features/authentication/presentation/view_models/cubit/authentication_cubit.dart';
 import 'package:social_media/features/authentication/presentation/views/widgets/custom_button.dart';
 import 'package:social_media/features/authentication/presentation/views/widgets/email_text_form_field.dart';
 import 'package:social_media/features/authentication/presentation/views/widgets/logo.dart';
@@ -19,7 +24,7 @@ class _LoginViewBodyState extends State<LoginViewBody> {
   final _formKey = GlobalKey<FormState>();
   late TextEditingController emailController;
   late TextEditingController passwordController;
-
+  UserModel? userModel;
   @override
   void initState() {
     // TODO: implement initState
@@ -31,36 +36,63 @@ class _LoginViewBodyState extends State<LoginViewBody> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(kDefaultPadding),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                Logo(),
-                Gap(20),
-                Widget0616(),
-                Gap(20),
-                const Text('Welcome Back', style: TextStyle(fontSize: 24)),
-                Gap(30),
-                EmailTextFormField(
-                  controller: emailController,
-                  onSaved: emailOnSavedMethod,
+      child: BlocConsumer<AuthenticationCubit, AuthenticationState>(
+        listener: (context, state) {
+          // TODO: implement listener
+          if (state is AuthenticationLoginSuccess) {
+            if (userModel != null) {
+              GoRouter.of(
+                context,
+              ).pushReplacement(AppRouter.kHome, extra: userModel);
+            }
+          }
+        },
+        builder: (context, state) {
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(kDefaultPadding),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    Logo(),
+                    Gap(20),
+                    Widget0616(),
+                    Gap(20),
+                    const Text('Welcome Back', style: TextStyle(fontSize: 24)),
+                    Gap(30),
+                    EmailTextFormField(
+                      controller: emailController,
+                      onSaved: emailOnSavedMethod,
+                    ),
+                    Gap(20),
+                    PasswordTextFormField(
+                      controller: passwordController,
+                      onSaved: passwordOnSavedMethod,
+                    ),
+                    Gap(30),
+                    CustomButton(
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                          userModel =
+                              await BlocProvider.of<AuthenticationCubit>(
+                                context,
+                              ).signIn(
+                                email: emailController.text,
+                                password: passwordController.text,
+                              );
+                        }
+                      },
+                      text: 'login',
+                    ),
+                    Gap(30),
+                    RegisterNowWidget(isLogin: true),
+                  ],
                 ),
-                Gap(20),
-                PasswordTextFormField(
-                  controller: passwordController,
-                  onSaved: passwordOnSavedMethod,
-                ),
-                Gap(30),
-                CustomButton(onPressed: () {}, text: 'login'),
-                Gap(30),
-                RegisterNowWidget(isLogin: true),
-              ],
+              ),
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }
