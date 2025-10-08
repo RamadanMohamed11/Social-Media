@@ -16,7 +16,7 @@ class AuthenticationService {
     String username,
   ) async {
     UserModel user = UserModel(
-      id: userCredential.user!.uid,
+      uid: userCredential.user!.uid,
       email: email,
       name: name,
       profileImage: "",
@@ -26,7 +26,7 @@ class AuthenticationService {
       following: [],
     );
     log('Storing user: ${user.toJson()}');
-    await _usersCollection.doc(user.id).set(user.toJson());
+    await _usersCollection.doc(user.uid).set(user.toJson());
   }
 
   Future<void> signUp({
