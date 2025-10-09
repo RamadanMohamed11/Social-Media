@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:social_media/features/add_post/presentation/views/widgets/add_post_view_model.dart';
+import 'package:social_media/features/add_post/presentation/views/widgets/add_post_view_body.dart';
 
 class AddPostView extends StatelessWidget {
   const AddPostView({super.key});

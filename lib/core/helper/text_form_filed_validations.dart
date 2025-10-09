@@ -40,4 +40,11 @@ abstract class TextFormFiledValidations {
     }
     return null;
   }
+
+  static String? postValidation(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter your post';
+    }
+    return null;
+  }
 }
