@@ -38,3 +38,11 @@ class AuthFailure extends Failure {
     }
   }
 }
+
+class CloudFailure extends Failure {
+  CloudFailure(super.errorMessage);
+
+  factory CloudFailure.fromException(Exception e) {
+    return CloudFailure("Unexpected error: $e");
+  }
+}

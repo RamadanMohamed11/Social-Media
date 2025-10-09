@@ -36,4 +36,16 @@ class PostModel {
       createdAt: snap['createdAt'],
     );
   }
+
+  Map<String, dynamic> toJson() => {
+    'pid': pid,
+    'uid': uid,
+    'username': username,
+    'profileImage': profileImage,
+    'postImage': postImage,
+    'caption': caption,
+    'likes': likes,
+    'comments': comments,
+    'createdAt': createdAt,
+  };
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:social_media/core/models/user_model.dart';
 import 'package:social_media/core/utils/app_colors.dart';
-import 'package:social_media/features/add/presentation/views/add_view.dart';
+import 'package:social_media/features/add_post/presentation/views/add_post_view.dart';
 import 'package:social_media/features/home/presentation/views/home_view.dart';
 import 'package:social_media/features/profile/presentation/views/profile_view.dart';
 import 'package:social_media/features/search/presentation/views/search_view.dart';
@@ -26,7 +26,7 @@ class _LayoutViewState extends State<LayoutView> {
     pageController = PageController();
     myPages = [
       HomeView(userModel: widget.userModel),
-      AddView(),
+      AddPostView(),
       SearchView(),
       ProfileView(),
     ];

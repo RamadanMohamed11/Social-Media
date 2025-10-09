@@ -4,8 +4,8 @@ import 'package:social_media/constants.dart';
 import 'package:social_media/core/utils/app_colors.dart';
 import 'package:social_media/core/utils/assets_data.dart';
 
-class AddViewModel extends StatelessWidget {
-  const AddViewModel({super.key});
+class AddPostViewBody extends StatelessWidget {
+  const AddPostViewBody({super.key});
 
   @override
   Widget build(BuildContext context) {

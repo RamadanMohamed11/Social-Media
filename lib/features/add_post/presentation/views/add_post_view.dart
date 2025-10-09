@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:social_media/features/add/presentation/views/widgets/add_view_model.dart';
+import 'package:social_media/features/add_post/presentation/views/widgets/add_post_view_model.dart';
 
-class AddView extends StatelessWidget {
-  const AddView({super.key});
+class AddPostView extends StatelessWidget {
+  const AddPostView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class AddView extends StatelessWidget {
           ],
         ),
       ),
-      body: const AddViewModel(),
+      body: const AddPostViewBody(),
     );
   }
 }
