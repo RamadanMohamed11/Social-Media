@@ -10,6 +10,7 @@ import 'package:social_media/core/utils/assets_data.dart';
 import 'package:social_media/core/utils/image_picker_method.dart';
 import 'package:social_media/features/add_post/presentation/view_model/add_post_cubit/add_post_cubit.dart';
 import 'package:social_media/features/add_post/presentation/views/widgets/pick_image_button.dart';
+import 'package:social_media/features/add_post/presentation/views/widgets/picked_image.dart';
 import 'package:social_media/features/add_post/presentation/views/widgets/post_text_form_field.dart';
 import 'package:uuid/uuid.dart';
 
@@ -41,13 +42,24 @@ class _AddPostViewBodyState extends State<AddPostViewBody> {
         padding: EdgeInsets.all(kDefaultPadding),
         child: Column(
           children: [
+            Gap(20),
             Row(
               children: [
-                const Text("Add Post"),
+                const Text(
+                  "Add Post",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
                 const Spacer(),
-                TextButton(onPressed: onPostPressed, child: const Text("Post")),
+                TextButton(
+                  onPressed: onPostPressed,
+                  child: const Text(
+                    "Post",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                ),
               ],
             ),
+            Gap(20),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -112,42 +124,5 @@ class _AddPostViewBodyState extends State<AddPostViewBody> {
   void removeImage() {
     image = null;
     setState(() {});
-  }
-}
-
-class PickedImage extends StatefulWidget {
-  const PickedImage({super.key, required this.image, required this.onPressed});
-  final Uint8List? image;
-  final void Function()? onPressed;
-
-  @override
-  State<PickedImage> createState() => _PickedImageState();
-}
-
-class _PickedImageState extends State<PickedImage> {
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          margin: const EdgeInsets.all(26),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            image: DecorationImage(
-              image: MemoryImage(widget.image!),
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
-        Positioned(
-          top: 0,
-          left: 0,
-          child: IconButton(
-            onPressed: widget.onPressed,
-            icon: const Icon(Icons.close, size: 30, color: Colors.red),
-          ),
-        ),
-      ],
-    );
   }
 }

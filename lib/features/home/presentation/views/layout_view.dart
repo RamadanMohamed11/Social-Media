@@ -2,15 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_media/core/models/user_model.dart';
 import 'package:social_media/core/utils/app_colors.dart';
-import 'package:social_media/core/utils/service_locator.dart';
 
 import 'package:social_media/features/add_post/presentation/view_model/add_post_cubit/add_post_cubit.dart';
 import 'package:social_media/features/add_post/presentation/views/add_post_view.dart';
 import 'package:social_media/features/home/presentation/views/home_view.dart';
 import 'package:social_media/features/profile/presentation/views/profile_view.dart';
 import 'package:social_media/features/search/presentation/views/search_view.dart';
-
-import '../../../add_post/data/repos/add_post_repo.dart';
 
 class LayoutView extends StatefulWidget {
   const LayoutView({super.key, required this.userModel});
@@ -42,6 +39,7 @@ class _LayoutViewState extends State<LayoutView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: selectedIndex == 0,
       bottomNavigationBar: BlocConsumer<AddPostCubit, AddPostState>(
         listener: (context, state) {
           if (state is AddPostSuccess) {
@@ -53,7 +51,7 @@ class _LayoutViewState extends State<LayoutView> {
           return NavigationBar(
             elevation: 0,
             selectedIndex: selectedIndex,
-            backgroundColor: AppColors.kWhiteColor.withValues(alpha: 0.2),
+            backgroundColor: AppColors.kWhiteColor.withValues(alpha: 0.8),
             indicatorColor: AppColors.kPrimaryColor.withValues(alpha: 0.2),
             onDestinationSelected: (value) {
               selectedIndex = value;

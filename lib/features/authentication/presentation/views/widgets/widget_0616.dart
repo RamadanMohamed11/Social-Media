@@ -10,13 +10,12 @@ class Widget0616 extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        Text("06", style: TextStyle(fontWeight: FontWeight.bold)),
+        Text("06", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
         Text(
           "16",
           style: TextStyle(
             fontWeight: FontWeight.bold,
             color: AppColors.kPrimaryColor,
-            fontSize: 20,
           ),
         ),
       ],
