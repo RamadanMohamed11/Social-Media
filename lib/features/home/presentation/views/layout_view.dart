@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_media/core/models/user_model.dart';
 import 'package:social_media/core/utils/app_colors.dart';
+import 'package:social_media/core/utils/service_locator.dart';
+
+import 'package:social_media/features/add_post/presentation/view_model/add_post_cubit/add_post_cubit.dart';
 import 'package:social_media/features/add_post/presentation/views/add_post_view.dart';
 import 'package:social_media/features/home/presentation/views/home_view.dart';
 import 'package:social_media/features/profile/presentation/views/profile_view.dart';
 import 'package:social_media/features/search/presentation/views/search_view.dart';
+
+import '../../../add_post/data/repos/add_post_repo.dart';
 
 class LayoutView extends StatefulWidget {
   const LayoutView({super.key, required this.userModel});
@@ -15,7 +21,7 @@ class LayoutView extends StatefulWidget {
 }
 
 class _LayoutViewState extends State<LayoutView> {
-  int selectedIndex = 0;
+  late int selectedIndex;
   late List<Widget> myPages;
   late PageController pageController;
 
@@ -23,10 +29,11 @@ class _LayoutViewState extends State<LayoutView> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    selectedIndex = 0;
     pageController = PageController();
     myPages = [
       HomeView(userModel: widget.userModel),
-      AddPostView(),
+      AddPostView(userModel: widget.userModel),
       SearchView(),
       ProfileView(),
     ];
@@ -35,49 +42,104 @@ class _LayoutViewState extends State<LayoutView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: NavigationBar(
-        elevation: 0,
-        selectedIndex: selectedIndex,
-        backgroundColor: AppColors.kWhiteColor.withValues(alpha: 0.2),
-        indicatorColor: AppColors.kPrimaryColor.withValues(alpha: 0.2),
-        onDestinationSelected: (value) {
-          selectedIndex = value;
-          pageController.jumpToPage(value);
-          setState(() {});
+      bottomNavigationBar: BlocConsumer<AddPostCubit, AddPostState>(
+        listener: (context, state) {
+          if (state is AddPostSuccess) {
+            selectedIndex = 0;
+            BlocProvider.of<AddPostCubit>(context).emitInitial();
+          }
         },
-        destinations: [
-          NavigationDestination(
-            icon: Icon(Icons.home),
-            selectedIcon: Icon(Icons.home, color: AppColors.kPrimaryColor),
-            label: "Home",
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.add),
-            selectedIcon: Icon(Icons.add, color: AppColors.kPrimaryColor),
+        builder: (context, state) {
+          return NavigationBar(
+            elevation: 0,
+            selectedIndex: selectedIndex,
+            backgroundColor: AppColors.kWhiteColor.withValues(alpha: 0.2),
+            indicatorColor: AppColors.kPrimaryColor.withValues(alpha: 0.2),
+            onDestinationSelected: (value) {
+              selectedIndex = value;
+              pageController.animateToPage(
+                value,
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeInOut,
+              );
+              setState(() {});
+            },
+            destinations: [
+              NavigationDestination(
+                icon: Icon(Icons.home),
+                selectedIcon: Icon(Icons.home, color: AppColors.kPrimaryColor),
+                label: "Home",
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.add),
+                selectedIcon: Icon(Icons.add, color: AppColors.kPrimaryColor),
 
-            label: "Add",
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.search),
+                label: "Add",
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.search),
 
-            selectedIcon: Icon(Icons.search, color: AppColors.kPrimaryColor),
-            label: "Search",
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.person),
-            selectedIcon: Icon(Icons.person, color: AppColors.kPrimaryColor),
+                selectedIcon: Icon(
+                  Icons.search,
+                  color: AppColors.kPrimaryColor,
+                ),
+                label: "Search",
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.person),
+                selectedIcon: Icon(
+                  Icons.person,
+                  color: AppColors.kPrimaryColor,
+                ),
 
-            label: "Profile",
-          ),
-        ],
+                label: "Profile",
+              ),
+            ],
+          );
+        },
       ),
-      body: PageView(
-        controller: pageController,
-        onPageChanged: (value) {
-          selectedIndex = value;
-          setState(() {});
+      body: BlocConsumer<AddPostCubit, AddPostState>(
+        listener: (context, state) {
+          if (state is AddPostSuccess) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                backgroundColor: Colors.green,
+                content: Center(
+                  child: Text(
+                    textAlign: TextAlign.center,
+                    "Post added successfully",
+                    style: TextStyle(color: AppColors.kWhiteColor),
+                  ),
+                ),
+              ),
+            );
+          }
         },
-        children: myPages,
+        builder: (context, state) {
+          if (state is AddPostInitial || state is AddPostSuccess) {
+            return PageView(
+              controller: pageController,
+              onPageChanged: (value) {
+                if (state is AddPostSuccess) {
+                  selectedIndex = 0;
+                  pageController.animateToPage(
+                    0,
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
+                  );
+                  BlocProvider.of<AddPostCubit>(context).emitInitial();
+                }
+                selectedIndex = value;
+                setState(() {});
+              },
+              children: myPages,
+            );
+          } else if (state is AddPostLoading) {
+            return const Center(child: CircularProgressIndicator());
+          } else {
+            return const Center(child: Text("Something went wrong"));
+          }
+        },
       ),
     );
   }

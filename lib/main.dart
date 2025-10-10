@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_media/core/utils/app_router.dart';
 import 'package:social_media/core/utils/authentication_service.dart';
 import 'package:social_media/core/utils/service_locator.dart';
+import 'package:social_media/features/add_post/data/repos/add_post_repo.dart';
+import 'package:social_media/features/add_post/presentation/view_model/add_post_cubit/add_post_cubit.dart';
 import 'package:social_media/features/authentication/data/repos/auth_repo.dart';
 import 'package:social_media/features/authentication/presentation/view_models/cubit/authentication_cubit.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -26,11 +28,19 @@ class SocialMedia extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AuthenticationCubit(
-        authRepo: getIt.get<AuthRepo>(),
-        authenticationService: getIt.get<AuthenticationService>(),
-      ),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => AuthenticationCubit(
+            authRepo: getIt.get<AuthRepo>(),
+            authenticationService: getIt.get<AuthenticationService>(),
+          ),
+        ),
+        BlocProvider(
+          create: (context) =>
+              AddPostCubit(addPostRepo: getIt.get<AddPostRepo>()),
+        ),
+      ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
         routerConfig: AppRouter.routes,

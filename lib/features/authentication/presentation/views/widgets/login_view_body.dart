@@ -48,50 +48,66 @@ class _LoginViewBodyState extends State<LoginViewBody> {
           }
         },
         builder: (context, state) {
-          return SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(kDefaultPadding),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    Logo(),
-                    Gap(20),
-                    Widget0616(),
-                    Gap(20),
-                    const Text('Welcome Back', style: TextStyle(fontSize: 24)),
-                    Gap(30),
-                    EmailTextFormField(
-                      controller: emailController,
-                      onSaved: emailOnSavedMethod,
-                    ),
-                    Gap(20),
-                    PasswordTextFormField(
-                      controller: passwordController,
-                      onSaved: passwordOnSavedMethod,
-                    ),
-                    Gap(30),
-                    CustomButton(
-                      onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
-                          userModel =
-                              await BlocProvider.of<AuthenticationCubit>(
-                                context,
-                              ).signIn(
-                                email: emailController.text,
-                                password: passwordController.text,
-                              );
-                        }
-                      },
-                      text: 'login',
-                    ),
-                    Gap(30),
-                    RegisterNowWidget(isLogin: true),
-                  ],
+          if (state is AuthenticationInitial ||
+              state is AuthenticationSignUpSuccess) {
+            return SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(kDefaultPadding),
+                child: BlocBuilder<AuthenticationCubit, AuthenticationState>(
+                  builder: (context, state) {
+                    return Form(
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          Logo(),
+                          Gap(20),
+                          Widget0616(),
+                          Gap(20),
+                          const Text(
+                            'Welcome Back',
+                            style: TextStyle(fontSize: 24),
+                          ),
+                          Gap(30),
+                          EmailTextFormField(
+                            controller: emailController,
+                            onSaved: emailOnSavedMethod,
+                          ),
+                          Gap(20),
+                          PasswordTextFormField(
+                            controller: passwordController,
+                            onSaved: passwordOnSavedMethod,
+                          ),
+                          Gap(30),
+                          CustomButton(
+                            onPressed: () async {
+                              if (_formKey.currentState!.validate()) {
+                                userModel =
+                                    await BlocProvider.of<AuthenticationCubit>(
+                                      context,
+                                    ).signIn(
+                                      email: emailController.text,
+                                      password: passwordController.text,
+                                    );
+                              }
+                            },
+                            text: 'login',
+                          ),
+                          Gap(30),
+                          RegisterNowWidget(isLogin: true),
+                        ],
+                      ),
+                    );
+                  },
                 ),
               ),
-            ),
-          );
+            );
+          } else if (state is AuthenticationLoading) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (state is AuthenticationFailure) {
+            return Center(child: Text(state.errorMessage));
+          } else {
+            return const Center(child: Text("Something went wrong"));
+          }
         },
       ),
     );

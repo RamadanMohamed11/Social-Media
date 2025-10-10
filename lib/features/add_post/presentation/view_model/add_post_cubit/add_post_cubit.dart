@@ -9,9 +9,13 @@ class AddPostCubit extends Cubit<AddPostState> {
   final AddPostRepo addPostRepo;
   AddPostCubit({required this.addPostRepo}) : super(AddPostInitial());
 
-  Future<void> addPost(PostModel post) async {
+  void emitInitial() {
+    emit(AddPostInitial());
+  }
+
+  Future<void> addPost(PostModel post, Uint8List? postImage) async {
     emit(AddPostLoading());
-    var result = await addPostRepo.addPost(post);
+    var result = await addPostRepo.addPost(post, postImage);
     result.fold((failure) => emit(AddPostError(failure.errorMessage)), (data) {
       emit(AddPostSuccess());
     });
