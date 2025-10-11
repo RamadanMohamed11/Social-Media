@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class PostModel {
   final String pid;
   final String uid;
+  final String name;
   final String username;
   final String profileImage;
   String postImageURL;
@@ -14,6 +15,7 @@ class PostModel {
   PostModel({
     required this.pid,
     required this.uid,
+    required this.name,
     required this.username,
     required this.profileImage,
     required this.postImageURL,
@@ -27,6 +29,7 @@ class PostModel {
     return PostModel(
       pid: snap['pid'],
       uid: snap['uid'],
+      name: snap['name'],
       username: snap['username'],
       profileImage: snap['profileImage'],
       postImageURL: snap['postImageURL'],
@@ -40,6 +43,7 @@ class PostModel {
   Map<String, dynamic> toJson() => {
     'pid': pid,
     'uid': uid,
+    'name': name,
     'username': username,
     'profileImage': profileImage,
     'postImageURL': postImageURL,

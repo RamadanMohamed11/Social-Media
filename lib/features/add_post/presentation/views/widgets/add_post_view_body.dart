@@ -99,6 +99,7 @@ class _AddPostViewBodyState extends State<AddPostViewBody> {
       PostModel post = PostModel(
         pid: pid,
         uid: widget.userModel.uid,
+        name: widget.userModel.name,
         username: widget.userModel.username,
         profileImage: widget.userModel.profileImage,
         caption: controller.text,

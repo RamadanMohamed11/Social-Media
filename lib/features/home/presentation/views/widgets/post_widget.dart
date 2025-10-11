@@ -1,0 +1,97 @@
+import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
+import 'package:social_media/constants.dart';
+import 'package:social_media/core/models/post_model.dart';
+import 'package:social_media/core/models/user_model.dart';
+import 'package:social_media/core/utils/app_colors.dart';
+import 'package:social_media/features/home/presentation/views/widgets/interaction_buttons.dart';
+import 'package:social_media/features/home/presentation/views/widgets/owner_info.dart';
+import 'package:social_media/features/home/presentation/views/widgets/posted_image.dart';
+
+class PostWidget extends StatelessWidget {
+  const PostWidget({super.key, this.userModel, this.post});
+
+  final UserModel? userModel;
+  final PostModel? post;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(8),
+      margin: const EdgeInsets.only(bottom: kDefaultPadding),
+      decoration: BoxDecoration(
+        color: AppColors.kWhiteColor,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Column(
+        children: [
+          OwnerInfo(post: post, userModel: userModel),
+          Gap(10),
+          post != null && post!.postImageURL.isNotEmpty
+              ? InkWell(
+                  onTap: () {
+                    openPostImageMethod(context);
+                  },
+                  child: PostedImage(post: post),
+                )
+              : const SizedBox(),
+          Gap(10),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              post?.caption ?? "                         ",
+              overflow: TextOverflow.ellipsis,
+              maxLines: 2,
+            ),
+          ),
+          Align(
+            alignment: Alignment.centerRight,
+            child: TextButton(
+              onPressed: () {},
+              child: Text(post != null ? "See More" : "           "),
+            ),
+          ),
+          Gap(10),
+          InteractionButtons(post: post),
+        ],
+      ),
+    );
+  }
+
+  void openPostImageMethod(BuildContext context) {
+    if (post != null) {
+      showDialog(
+        context: context,
+        builder: (context) => Dialog(
+          backgroundColor: Colors.black,
+          child: Stack(
+            children: [
+              InteractiveViewer(
+                minScale: 0.5,
+                maxScale: 4.0,
+                child: Center(
+                  child: Image.network(
+                    post?.postImageURL ?? " ",
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              ),
+              Positioned(
+                top: 10,
+                right: 10,
+                child: IconButton(
+                  icon: Icon(
+                    Icons.close,
+                    color: AppColors.kWhiteColor,
+                    size: 30,
+                  ),
+                  onPressed: () => Navigator.pop(context),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+  }
+}
