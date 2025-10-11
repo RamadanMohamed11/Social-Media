@@ -23,8 +23,9 @@ class CloudService {
     await collectionReference.doc(docId).delete();
   }
 
-  Future<List<dynamic>> getData() async {
-    QuerySnapshot querySnapshot = await collectionReference.get();
-    return querySnapshot.docs.map((doc) => doc.data()).toList();
+  Stream<List<DocumentSnapshot>> getData() {
+    return collectionReference.snapshots().map(
+      (querySnapshot) => querySnapshot.docs,
+    );
   }
 }

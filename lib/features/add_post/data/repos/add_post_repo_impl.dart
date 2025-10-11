@@ -20,14 +20,15 @@ class AddPostRepoImpl implements AddPostRepo {
     Uint8List? postImage,
   ) async {
     try {
-      await cloudService.storeData(obj: post.toJson(), docId: post.pid);
       if (postImage != null) {
-        await storageService.uploadData(
+        post.postImageURL = await storageService.uploadData(
           bucketId: 'posts',
           fileName: post.pid,
           file: postImage,
         );
       }
+      await cloudService.storeData(obj: post.toJson(), docId: post.pid);
+
       return Right(1);
     } on FirebaseException catch (e) {
       return Left(CloudFailure.fromException(e));

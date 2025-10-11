@@ -7,6 +7,8 @@ import 'package:social_media/features/add_post/data/repos/add_post_repo.dart';
 import 'package:social_media/features/add_post/data/repos/add_post_repo_impl.dart';
 import 'package:social_media/features/authentication/data/repos/auth_repo.dart';
 import 'package:social_media/features/authentication/data/repos/auth_repo_impl.dart';
+import 'package:social_media/features/home/data/repos/home_repo.dart';
+import 'package:social_media/features/home/data/repos/home_repo_impl.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 final getIt = GetIt.instance;
@@ -30,6 +32,12 @@ void setupServiceLocator() {
   );
   getIt.registerSingleton<AddPostRepo>(
     AddPostRepoImpl(
+      cloudService: getIt.get<CloudService>(instanceName: 'posts'),
+      storageService: getIt.get<StorageService>(),
+    ),
+  );
+  getIt.registerSingleton<HomeRepo>(
+    HomeRepoImpl(
       cloudService: getIt.get<CloudService>(instanceName: 'posts'),
       storageService: getIt.get<StorageService>(),
     ),

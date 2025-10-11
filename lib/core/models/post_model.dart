@@ -5,7 +5,7 @@ class PostModel {
   final String uid;
   final String username;
   final String profileImage;
-  // final String postImage;
+  String postImageURL;
   final String caption;
   final List<dynamic> likes;
   final List<dynamic> comments;
@@ -16,7 +16,7 @@ class PostModel {
     required this.uid,
     required this.username,
     required this.profileImage,
-    // required this.postImage,
+    required this.postImageURL,
     required this.caption,
     required this.likes,
     required this.comments,
@@ -29,11 +29,11 @@ class PostModel {
       uid: snap['uid'],
       username: snap['username'],
       profileImage: snap['profileImage'],
-      // postImage: snap['postImage'],
+      postImageURL: snap['postImageURL'],
       caption: snap['caption'],
       likes: snap['likes'],
       comments: snap['comments'],
-      createdAt: snap['createdAt'],
+      createdAt: (snap['createdAt'] as Timestamp).toDate(),
     );
   }
 
@@ -42,7 +42,7 @@ class PostModel {
     'uid': uid,
     'username': username,
     'profileImage': profileImage,
-    // 'postImage': postImage,
+    'postImageURL': postImageURL,
     'caption': caption,
     'likes': likes,
     'comments': comments,

@@ -102,6 +102,7 @@ class _AddPostViewBodyState extends State<AddPostViewBody> {
         username: widget.userModel.username,
         profileImage: widget.userModel.profileImage,
         caption: controller.text,
+        postImageURL: "",
         likes: [],
         comments: [],
         createdAt: DateTime.now(),

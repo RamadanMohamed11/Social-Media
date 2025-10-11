@@ -8,6 +8,8 @@ import 'package:social_media/features/add_post/data/repos/add_post_repo.dart';
 import 'package:social_media/features/add_post/presentation/view_model/add_post_cubit/add_post_cubit.dart';
 import 'package:social_media/features/authentication/data/repos/auth_repo.dart';
 import 'package:social_media/features/authentication/presentation/view_models/cubit/authentication_cubit.dart';
+import 'package:social_media/features/home/data/repos/home_repo.dart';
+import 'package:social_media/features/home/presentation/view_model/home_view_cubit/home_view_cubit.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'firebase_options.dart';
 
@@ -39,6 +41,9 @@ class SocialMedia extends StatelessWidget {
         BlocProvider(
           create: (context) =>
               AddPostCubit(addPostRepo: getIt.get<AddPostRepo>()),
+        ),
+        BlocProvider(
+          create: (context) => HomeViewCubit(homeRepo: getIt.get<HomeRepo>()),
         ),
       ],
       child: MaterialApp.router(
