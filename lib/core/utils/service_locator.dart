@@ -9,6 +9,8 @@ import 'package:social_media/features/authentication/data/repos/auth_repo.dart';
 import 'package:social_media/features/authentication/data/repos/auth_repo_impl.dart';
 import 'package:social_media/features/home/data/repos/home_repo.dart';
 import 'package:social_media/features/home/data/repos/home_repo_impl.dart';
+import 'package:social_media/features/search/data/repos/search_repo.dart';
+import 'package:social_media/features/search/data/repos/search_repo_impl.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 final getIt = GetIt.instance;
@@ -50,7 +52,9 @@ void setupServiceLocator() {
     ),
     instanceName: 'users',
   );
-  // getIt.registerSingleton<UserRepo>(
-  //   UserRepoImpl(cloudService: getIt.get<CloudService>(instanceName: 'users')),
-  // );
+  getIt.registerSingleton<SearchRepo>(
+    SearchRepoImpl(
+      cloudService: getIt.get<CloudService>(instanceName: 'users'),
+    ),
+  );
 }

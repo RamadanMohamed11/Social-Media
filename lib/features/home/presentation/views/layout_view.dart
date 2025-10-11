@@ -31,7 +31,7 @@ class _LayoutViewState extends State<LayoutView> {
     myPages = [
       HomeView(userModel: widget.userModel),
       AddPostView(userModel: widget.userModel),
-      SearchView(),
+      SearchView(userModel: widget.userModel),
       ProfileView(),
     ];
   }
@@ -51,7 +51,7 @@ class _LayoutViewState extends State<LayoutView> {
           return NavigationBar(
             elevation: 0,
             selectedIndex: selectedIndex,
-            backgroundColor: AppColors.kWhiteColor.withValues(alpha: 0.8),
+            backgroundColor: AppColors.kWhiteColor.withValues(alpha: 0.95),
             indicatorColor: AppColors.kPrimaryColor.withValues(alpha: 0.2),
             onDestinationSelected: (value) {
               selectedIndex = value;

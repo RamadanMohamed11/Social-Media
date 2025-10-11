@@ -10,6 +10,8 @@ import 'package:social_media/features/authentication/data/repos/auth_repo.dart';
 import 'package:social_media/features/authentication/presentation/view_models/cubit/authentication_cubit.dart';
 import 'package:social_media/features/home/data/repos/home_repo.dart';
 import 'package:social_media/features/home/presentation/view_model/home_view_cubit/home_view_cubit.dart';
+import 'package:social_media/features/search/data/repos/search_repo.dart';
+import 'package:social_media/features/search/presentation/view_model/search_cubit/search_cubit.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'firebase_options.dart';
 
@@ -44,6 +46,9 @@ class SocialMedia extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => HomeViewCubit(homeRepo: getIt.get<HomeRepo>()),
+        ),
+        BlocProvider(
+          create: (context) => SearchCubit(searchRepo: getIt.get<SearchRepo>()),
         ),
       ],
       child: MaterialApp.router(

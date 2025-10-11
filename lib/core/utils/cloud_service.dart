@@ -23,9 +23,19 @@ class CloudService {
     await collectionReference.doc(docId).delete();
   }
 
-  Stream<List<DocumentSnapshot>> getData() {
-    return collectionReference.snapshots().map(
-      (querySnapshot) => querySnapshot.docs,
-    );
+  Stream<List<DocumentSnapshot>> getData({
+    String? orderBy,
+    bool? isDescending,
+  }) {
+    if (orderBy == null) {
+      return collectionReference.snapshots().map(
+        (querySnapshot) => querySnapshot.docs,
+      );
+    } else {
+      return collectionReference
+          .orderBy(orderBy, descending: isDescending ?? true)
+          .snapshots()
+          .map((querySnapshot) => querySnapshot.docs);
+    }
   }
 }
