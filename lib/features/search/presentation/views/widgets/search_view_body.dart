@@ -5,9 +5,8 @@ import 'package:social_media/constants.dart';
 import 'package:social_media/core/models/user_model.dart';
 import 'package:social_media/core/utils/app_colors.dart';
 import 'package:social_media/core/utils/assets_data.dart';
-import 'package:social_media/core/utils/authentication_service.dart';
-import 'package:social_media/core/utils/service_locator.dart';
 import 'package:social_media/features/search/presentation/view_model/search_cubit/search_cubit.dart';
+import 'package:social_media/features/search/presentation/views/widgets/search_text_field.dart';
 
 class SearchViewBody extends StatefulWidget {
   const SearchViewBody({super.key, required this.userModel});
@@ -68,8 +67,11 @@ class _SearchViewBodyState extends State<SearchViewBody> {
                             radius: 20,
                             backgroundImage: Image.asset(AssetsData.man).image,
                           ),
-                          title: Text(users[index].username),
-                          subtitle: Text(users[index].email),
+                          title: Text(
+                            users[index].name,
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          subtitle: Text("@${users[index].username}"),
                         );
                       },
                     );
@@ -100,60 +102,6 @@ class _SearchViewBodyState extends State<SearchViewBody> {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class SearchTextField extends StatefulWidget {
-  const SearchTextField({
-    super.key,
-    required this.controller,
-    required this.onChange,
-  });
-  final TextEditingController controller;
-  final Function(String) onChange;
-
-  @override
-  State<SearchTextField> createState() => _SearchTextFieldState();
-}
-
-class _SearchTextFieldState extends State<SearchTextField> {
-  bool isTextFieldPressed = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-      onTap: () {
-        setState(() {
-          isTextFieldPressed = true;
-        });
-      },
-
-      onSubmitted: (value) {
-        setState(() {
-          isTextFieldPressed = false;
-        });
-      },
-      onChanged: widget.onChange,
-      controller: widget.controller,
-      decoration: InputDecoration(
-        suffixIcon: Icon(
-          Icons.search,
-          color: isTextFieldPressed ? AppColors.kPrimaryColor : Colors.grey,
-        ),
-        hintText: 'Search by username',
-        fillColor: AppColors.kWhiteColor,
-        filled: true,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide.none,
-        ),
-
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide(color: AppColors.kPrimaryColor),
-        ),
       ),
     );
   }

@@ -32,7 +32,7 @@ class _LayoutViewState extends State<LayoutView> {
       HomeView(userModel: widget.userModel),
       AddPostView(userModel: widget.userModel),
       SearchView(userModel: widget.userModel),
-      ProfileView(),
+      ProfileView(userModel: widget.userModel),
     ];
   }
 

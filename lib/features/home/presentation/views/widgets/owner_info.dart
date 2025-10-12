@@ -23,7 +23,10 @@ class OwnerInfo extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(post?.name ?? "                    "),
+            Text(
+              post?.name ?? "                    ",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
             Text("@${post?.username ?? "     "}"),
           ],
         ),
