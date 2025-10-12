@@ -6,9 +6,22 @@ import 'package:social_media/core/models/user_model.dart';
 import 'package:social_media/core/utils/app_colors.dart';
 import 'package:social_media/core/utils/assets_data.dart';
 
-class ProfileViewBody extends StatelessWidget {
+class ProfileViewBody extends StatefulWidget {
   const ProfileViewBody({super.key, required this.userModel});
   final UserModel userModel;
+
+  @override
+  State<ProfileViewBody> createState() => _ProfileViewBodyState();
+}
+
+class _ProfileViewBodyState extends State<ProfileViewBody>
+    with TickerProviderStateMixin {
+  late TabController _tabController;
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 2, vsync: this);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,12 +37,12 @@ class ProfileViewBody extends StatelessWidget {
               ),
               Spacer(),
               FollowsAndFollowersWidget(
-                userModel: userModel,
+                userModel: widget.userModel,
                 isFollowers: true,
               ),
               Gap(5),
               FollowsAndFollowersWidget(
-                userModel: userModel,
+                userModel: widget.userModel,
                 isFollowers: false,
               ),
             ],
@@ -41,10 +54,10 @@ class ProfileViewBody extends StatelessWidget {
                 child: ListTile(
                   contentPadding: EdgeInsets.zero,
                   title: Text(
-                    userModel.name,
+                    widget.userModel.name,
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  subtitle: Text("@${userModel.username}"),
+                  subtitle: Text("@${widget.userModel.username}"),
                 ),
               ),
               ElevatedButton(
@@ -72,7 +85,7 @@ class ProfileViewBody extends StatelessWidget {
           Gap(5),
           Row(
             children: [
-              userModel.bio.isNotEmpty
+              widget.userModel.bio.isNotEmpty
                   ? Expanded(
                       child: Container(
                         margin: const EdgeInsets.all(12),
@@ -83,7 +96,7 @@ class ProfileViewBody extends StatelessWidget {
                         ),
                         child: Center(
                           child: Text(
-                            userModel.bio,
+                            widget.userModel.bio,
                             style: TextStyle(
                               color: AppColors.kPrimaryColor,
                               fontSize: 18,
@@ -95,9 +108,29 @@ class ProfileViewBody extends StatelessWidget {
                   : SizedBox(),
             ],
           ),
+          Gap(10),
+          TabBar(
+            controller: _tabController,
+            indicatorColor: AppColors.ksecondaryColor,
+            labelColor: AppColors.kPrimaryColor,
+            unselectedLabelColor: Colors.grey,
+            indicatorSize: TabBarIndicatorSize.tab,
+
+            tabs: [
+              Tab(text: "Photos"),
+              Tab(text: "Posts"),
+            ],
+          ),
+          Gap(10),
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 }
 
