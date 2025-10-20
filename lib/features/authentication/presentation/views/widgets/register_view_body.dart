@@ -42,6 +42,7 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
       child: BlocConsumer<AuthenticationCubit, AuthenticationState>(
         listener: (context, state) {
           if (state is AuthenticationSignUpSuccess) {
+            BlocProvider.of<AuthenticationCubit>(context).emitInitial();
             GoRouter.of(context).pop();
           } else if (state is AuthenticationFailure) {
             ScaffoldMessenger.of(

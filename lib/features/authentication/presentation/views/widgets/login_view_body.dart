@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:social_media/constants.dart';
+import 'package:social_media/core/helper/show_dialog.dart';
 import 'package:social_media/core/models/user_model.dart';
 import 'package:social_media/core/utils/app_router.dart';
 import 'package:social_media/features/authentication/presentation/view_models/cubit/authentication_cubit.dart';
@@ -38,18 +39,40 @@ class _LoginViewBodyState extends State<LoginViewBody> {
     return Center(
       child: BlocConsumer<AuthenticationCubit, AuthenticationState>(
         listener: (context, state) {
-          // TODO: implement listener
           if (state is AuthenticationLoginSuccess) {
             if (userModel != null) {
               GoRouter.of(
                 context,
               ).pushReplacement(AppRouter.kLayoutView, extra: userModel);
+              BlocProvider.of<AuthenticationCubit>(context).emitInitial();
             }
+          } else if (state is AuthenticationSignUpSuccess) {
+            showMessageDialog(
+              context,
+              true,
+              false,
+              "User created successfully",
+              btnOkOnPress: () {
+                BlocProvider.of<AuthenticationCubit>(context).emitInitial();
+              },
+            );
+            BlocProvider.of<AuthenticationCubit>(context).emitInitial();
+          } else if (state is AuthenticationSignOutSuccess) {
+            showMessageDialog(
+              context,
+              false,
+              true,
+              "User signed out successfully",
+              btnOkOnPress: () {
+                BlocProvider.of<AuthenticationCubit>(context).emitInitial();
+              },
+            );
           }
         },
         builder: (context, state) {
           if (state is AuthenticationInitial ||
-              state is AuthenticationSignUpSuccess) {
+              state is AuthenticationSignUpSuccess ||
+              state is AuthenticationSignOutSuccess) {
             return SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(kDefaultPadding),

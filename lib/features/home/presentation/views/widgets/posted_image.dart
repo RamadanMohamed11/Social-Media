@@ -3,7 +3,7 @@ import 'package:redacted/redacted.dart';
 import 'package:social_media/core/models/post_model.dart';
 
 class PostedImage extends StatelessWidget {
-  const PostedImage({super.key, required this.post});
+  const PostedImage({super.key, this.post});
 
   final PostModel? post;
 

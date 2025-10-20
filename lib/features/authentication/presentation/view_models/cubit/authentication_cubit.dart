@@ -16,6 +16,10 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     required this.authenticationService,
   }) : super(AuthenticationInitial());
 
+  void emitInitial() {
+    emit(AuthenticationInitial());
+  }
+
   Future<void> signUp({
     required String email,
     required String password,
@@ -55,6 +59,19 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
       (userResult) {
         emit(AuthenticationLoginSuccess());
         return userResult;
+      },
+    );
+  }
+
+  Future<void> signOut() async {
+    emit(AuthenticationLoading());
+    var result = await authRepo.signOut();
+    result.fold(
+      (failure) {
+        emit(AuthenticationFailure(failure.errorMessage));
+      },
+      (success) {
+        emit(AuthenticationSignOutSuccess());
       },
     );
   }
