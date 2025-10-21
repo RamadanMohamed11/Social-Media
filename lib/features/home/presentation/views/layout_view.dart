@@ -4,11 +4,14 @@ import 'package:go_router/go_router.dart';
 import 'package:social_media/core/models/user_model.dart';
 import 'package:social_media/core/utils/app_colors.dart';
 import 'package:social_media/core/utils/app_router.dart';
+import 'package:social_media/core/utils/service_locator.dart';
 
 import 'package:social_media/features/add_post/presentation/view_model/add_post_cubit/add_post_cubit.dart';
 import 'package:social_media/features/add_post/presentation/views/add_post_view.dart';
 import 'package:social_media/features/authentication/presentation/view_models/cubit/authentication_cubit.dart';
 import 'package:social_media/features/home/presentation/views/home_view.dart';
+import 'package:social_media/features/profile/data/repos/profile_repo.dart';
+import 'package:social_media/features/profile/presentation/view_model/cubit/profile_cubit.dart';
 import 'package:social_media/features/profile/presentation/views/profile_view.dart';
 import 'package:social_media/features/search/presentation/views/search_view.dart';
 
@@ -35,7 +38,7 @@ class _LayoutViewState extends State<LayoutView> {
       HomeView(userModel: widget.userModel),
       AddPostView(userModel: widget.userModel),
       SearchView(userModel: widget.userModel),
-      ProfileView(userModel: widget.userModel),
+      ProfileView(),
     ];
   }
 

@@ -38,4 +38,8 @@ class CloudService {
           .map((querySnapshot) => querySnapshot.docs);
     }
   }
+
+  Future<DocumentSnapshot> getDocumentById({required String docId}) async {
+    return await collectionReference.doc(docId).get();
+  }
 }

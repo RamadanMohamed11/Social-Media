@@ -4,7 +4,12 @@ import 'package:social_media/core/utils/app_colors.dart';
 import 'package:gap/gap.dart';
 
 class UserInfoAndContactButtons extends StatelessWidget {
-  const UserInfoAndContactButtons({super.key, required this.userModel});
+  const UserInfoAndContactButtons({
+    super.key,
+    required this.userModel,
+    this.isCurrentUser = false,
+  });
+  final bool isCurrentUser;
 
   final UserModel userModel;
 
@@ -22,26 +27,30 @@ class UserInfoAndContactButtons extends StatelessWidget {
             subtitle: Text("@${userModel.username}"),
           ),
         ),
-        ElevatedButton(
-          onPressed: () {},
-          style: ElevatedButton.styleFrom(
-            backgroundColor: AppColors.kPrimaryColor,
-            foregroundColor: AppColors.kWhiteColor,
-          ),
-          child: Row(children: [Text("Follow"), Gap(5), Icon(Icons.add)]),
-        ),
+        isCurrentUser
+            ? SizedBox()
+            : ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.kPrimaryColor,
+                  foregroundColor: AppColors.kWhiteColor,
+                ),
+                child: Row(children: [Text("Follow"), Gap(5), Icon(Icons.add)]),
+              ),
         Gap(5),
-        IconButton(
-          onPressed: () {},
-          style: IconButton.styleFrom(
-            backgroundColor: AppColors.kWhiteColor,
-            foregroundColor: AppColors.kPrimaryColor,
-            shape: const CircleBorder(
-              side: BorderSide(color: AppColors.kPrimaryColor),
-            ),
-          ),
-          icon: Icon(Icons.message),
-        ),
+        isCurrentUser
+            ? SizedBox()
+            : IconButton(
+                onPressed: () {},
+                style: IconButton.styleFrom(
+                  backgroundColor: AppColors.kWhiteColor,
+                  foregroundColor: AppColors.kPrimaryColor,
+                  shape: const CircleBorder(
+                    side: BorderSide(color: AppColors.kPrimaryColor),
+                  ),
+                ),
+                icon: Icon(Icons.message),
+              ),
       ],
     );
   }

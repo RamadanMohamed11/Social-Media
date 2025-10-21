@@ -9,6 +9,8 @@ import 'package:social_media/features/authentication/data/repos/auth_repo.dart';
 import 'package:social_media/features/authentication/data/repos/auth_repo_impl.dart';
 import 'package:social_media/features/home/data/repos/home_repo.dart';
 import 'package:social_media/features/home/data/repos/home_repo_impl.dart';
+import 'package:social_media/features/profile/data/repos/profile_repo.dart';
+import 'package:social_media/features/profile/data/repos/profile_repo_impl.dart';
 import 'package:social_media/features/search/data/repos/search_repo.dart';
 import 'package:social_media/features/search/data/repos/search_repo_impl.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -16,10 +18,28 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 final getIt = GetIt.instance;
 
 void setupServiceLocator() {
+  getIt.registerSingleton<CloudService>(
+    CloudService(
+      collectionReference: FirebaseFirestore.instance.collection('users'),
+    ),
+    instanceName: 'users',
+  );
+
   // Authentication Service
-  getIt.registerSingleton<AuthenticationService>(AuthenticationService());
+  getIt.registerSingleton<AuthenticationService>(
+    AuthenticationService(
+      cloudService: getIt.get<CloudService>(instanceName: 'users'),
+    ),
+  );
   getIt.registerSingleton<AuthRepo>(
     AuthRepoImpl(authenticationService: getIt.get<AuthenticationService>()),
+  );
+
+  getIt.registerSingleton<ProfileRepo>(
+    ProfileRepoImpl(
+      cloudService: getIt.get<CloudService>(instanceName: 'users'),
+      authService: getIt.get<AuthenticationService>(),
+    ),
   );
 
   // Cloud Service for Posts
@@ -46,12 +66,7 @@ void setupServiceLocator() {
   );
 
   // Cloud Service for Users
-  getIt.registerSingleton<CloudService>(
-    CloudService(
-      collectionReference: FirebaseFirestore.instance.collection('users'),
-    ),
-    instanceName: 'users',
-  );
+
   getIt.registerSingleton<SearchRepo>(
     SearchRepoImpl(
       cloudService: getIt.get<CloudService>(instanceName: 'users'),

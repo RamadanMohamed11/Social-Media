@@ -9,10 +9,16 @@ import 'package:social_media/features/home/presentation/views/widgets/owner_info
 import 'package:social_media/features/home/presentation/views/widgets/posted_image.dart';
 
 class PostWidget extends StatelessWidget {
-  const PostWidget({super.key, this.userModel, this.post});
+  const PostWidget({
+    super.key,
+    this.userModel,
+    this.post,
+    this.onOwnerTap,
+  });
 
   final UserModel? userModel;
   final PostModel? post;
+  final VoidCallback? onOwnerTap;
 
   @override
   Widget build(BuildContext context) {
@@ -25,12 +31,18 @@ class PostWidget extends StatelessWidget {
       ),
       child: Column(
         children: [
-          OwnerInfo(post: post, userModel: userModel),
+          InkWell(
+            onTap: onOwnerTap,
+            child: OwnerInfo(
+              post: post,
+              userModel: userModel,
+            ),
+          ),
           Gap(10),
           post != null && post!.postImageURL.isNotEmpty
               ? InkWell(
                   onTap: () {
-                    openPostImageMethod(context);
+                    _openPostImageDialog(context);
                   },
                   child: PostedImage(post: post),
                 )
@@ -58,7 +70,7 @@ class PostWidget extends StatelessWidget {
     );
   }
 
-  void openPostImageMethod(BuildContext context) {
+  void _openPostImageDialog(BuildContext context) {
     if (post != null) {
       showDialog(
         context: context,

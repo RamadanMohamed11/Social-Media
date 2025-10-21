@@ -27,7 +27,11 @@ class ProfilePostsListView extends StatelessWidget {
               physics: BouncingScrollPhysics(),
               itemCount: posts.length,
               itemBuilder: (context, index) {
-                return PostWidget(userModel: userModel, post: posts[index]);
+                return PostWidget(
+                  userModel: userModel,
+                  post: posts[index],
+                  onOwnerTap: null, // Already on profile page, no need to navigate
+                );
               },
             );
           } else {

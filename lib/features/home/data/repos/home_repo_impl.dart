@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:social_media/core/errors/failures.dart';
 import 'package:social_media/core/models/post_model.dart';
+import 'package:social_media/core/models/user_model.dart';
 import 'package:social_media/core/utils/cloud_service.dart';
 import 'package:social_media/core/utils/storage_service.dart';
 import 'package:social_media/features/home/data/repos/home_repo.dart';

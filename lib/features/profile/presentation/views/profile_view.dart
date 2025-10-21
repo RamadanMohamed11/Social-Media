@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:social_media/core/models/post_model.dart';
 import 'package:social_media/core/models/user_model.dart';
 import 'package:social_media/features/authentication/presentation/view_models/cubit/authentication_cubit.dart';
 import 'package:social_media/features/profile/presentation/views/widgets/profile_view_body.dart';
 
 class ProfileView extends StatelessWidget {
-  const ProfileView({super.key, required this.userModel});
-  final UserModel userModel;
+  const ProfileView({super.key, this.userModel, this.post});
+  final UserModel? userModel;
+  final List<PostModel>? post;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,11 @@ class ProfileView extends StatelessWidget {
           ),
         ],
       ),
-      body: ProfileViewBody(userModel: userModel),
+      body: ProfileViewBody(
+        userModel: userModel,
+        post: post,
+        isCurrentUser: userModel == null,
+      ),
     );
   }
 }
