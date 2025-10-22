@@ -3,6 +3,7 @@ import 'package:social_media/core/models/post_model.dart';
 import 'package:social_media/core/models/user_model.dart';
 import 'package:social_media/features/authentication/presentation/views/login_view.dart';
 import 'package:social_media/features/authentication/presentation/views/register_view.dart';
+import 'package:social_media/features/edit_profile/presentation/views/edit_profile_view.dart';
 import 'package:social_media/features/home/presentation/views/home_view.dart';
 import 'package:social_media/features/home/presentation/views/layout_view.dart';
 import 'package:social_media/features/profile/presentation/views/profile_view.dart';
@@ -13,6 +14,7 @@ abstract class AppRouter {
   static const String kHome = '/home';
   static const String kLayoutView = '/layout';
   static const String kProfile = '/profile';
+  static const String kEditProfile = '/edit_profile';
 
   static final GoRouter routes = GoRouter(
     initialLocation: kLogin,
@@ -50,6 +52,12 @@ abstract class AppRouter {
             userModel: extras['userModel'] as UserModel,
             post: extras['posts'] as List<PostModel>,
           );
+        },
+      ),
+      GoRoute(
+        path: kEditProfile,
+        builder: (context, state) {
+          return EditProfileView(userModel: state.extra as UserModel);
         },
       ),
     ],
