@@ -17,6 +17,9 @@ class BioTextField extends StatelessWidget {
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.info_outline),
         hintText: 'Bio',
+        labelText: 'Bio',
+        labelStyle: TextStyle(color: AppColors.ksecondaryColor),
+
         fillColor: AppColors.kWhiteColor,
         filled: true,
         border: OutlineInputBorder(

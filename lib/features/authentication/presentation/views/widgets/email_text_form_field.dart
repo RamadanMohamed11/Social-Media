@@ -19,6 +19,8 @@ class EmailTextFormField extends StatelessWidget {
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.email),
         hintText: 'Email',
+        labelText: 'Email',
+        labelStyle: TextStyle(color: AppColors.ksecondaryColor),
         fillColor: AppColors.kWhiteColor,
         filled: true,
         border: OutlineInputBorder(

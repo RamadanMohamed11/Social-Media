@@ -14,11 +14,13 @@ class PostWidget extends StatelessWidget {
     this.userModel,
     this.post,
     this.onOwnerTap,
+    this.onLoveTap,
   });
 
   final UserModel? userModel;
   final PostModel? post;
   final VoidCallback? onOwnerTap;
+  final VoidCallback? onLoveTap;
 
   @override
   Widget build(BuildContext context) {
@@ -33,10 +35,7 @@ class PostWidget extends StatelessWidget {
         children: [
           InkWell(
             onTap: onOwnerTap,
-            child: OwnerInfo(
-              post: post,
-              userModel: userModel,
-            ),
+            child: OwnerInfo(post: post, userModel: userModel),
           ),
           Gap(10),
           post != null && post!.postImageURL.isNotEmpty
@@ -64,7 +63,11 @@ class PostWidget extends StatelessWidget {
             ),
           ),
           Gap(10),
-          InteractionButtons(post: post),
+          InteractionButtons(
+            post: post,
+            onLoveTap: onLoveTap,
+            currentUserId: userModel?.uid ?? "",
+          ),
         ],
       ),
     );

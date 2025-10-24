@@ -21,4 +21,14 @@ class HomeViewCubit extends Cubit<HomeViewState> {
       return Stream<List<PostModel>>.empty();
     }
   }
+
+  Future<void> lovePost({required PostModel newPost}) async {
+    emit(HomeViewLoading());
+    try {
+      await homeRepo.lovePost(newPost: newPost);
+      emit(HomeViewSuccess());
+    } catch (e) {
+      emit(HomeViewError(e.toString()));
+    }
+  }
 }

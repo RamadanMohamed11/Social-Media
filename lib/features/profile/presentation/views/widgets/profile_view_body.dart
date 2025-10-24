@@ -84,6 +84,7 @@ class _ProfileViewBodyState extends State<ProfileViewBody>
                         userModel: widget.isCurrentUser!
                             ? state.userModel
                             : widget.userModel!,
+                        currentUserId: state.userModel.uid,
                       ),
                     ],
                   ),

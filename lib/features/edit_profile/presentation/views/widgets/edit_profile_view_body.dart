@@ -39,50 +39,52 @@ class _EditProfileViewBodyState extends State<EditProfileViewBody> {
       physics: BouncingScrollPhysics(),
       child: Padding(
         padding: const EdgeInsets.all(kDefaultPadding),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Gap(60),
-            Center(
-              child: Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  CircleAvatar(
-                    radius: 70,
-                    backgroundImage: AssetImage(AssetsData.man),
-                  ),
-                  Positioned(
-                    bottom: -10,
-                    right: -10,
-                    child: IconButton(
-                      onPressed: () {},
-                      style: IconButton.styleFrom(
-                        backgroundColor: AppColors.ksecondaryColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                      icon: Icon(Icons.edit, color: AppColors.kWhiteColor),
+        child: Form(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Gap(60),
+              Center(
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    CircleAvatar(
+                      radius: 70,
+                      backgroundImage: AssetImage(AssetsData.man),
                     ),
-                  ),
-                ],
+                    Positioned(
+                      bottom: -10,
+                      right: -10,
+                      child: IconButton(
+                        onPressed: () {},
+                        style: IconButton.styleFrom(
+                          backgroundColor: AppColors.ksecondaryColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        icon: Icon(Icons.edit, color: AppColors.kWhiteColor),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            Gap(60),
-            NameTextFormField(
-              controller: nameController,
-              onSaved: nameOnSavedMethod,
-            ),
-            Gap(30),
-            UsernameTextFormField(
-              controller: usernameController,
-              onSaved: usernameOnSavedMethod,
-            ),
-            Gap(30),
-            BioTextField(controller: bioController),
-            Gap(60),
-            CustomButton(text: "update", onPressed: () {}),
-          ],
+              Gap(60),
+              NameTextFormField(
+                controller: nameController,
+                onSaved: nameOnSavedMethod,
+              ),
+              Gap(30),
+              UsernameTextFormField(
+                controller: usernameController,
+                onSaved: usernameOnSavedMethod,
+              ),
+              Gap(30),
+              BioTextField(controller: bioController),
+              Gap(60),
+              CustomButton(text: "update", onPressed: () {}),
+            ],
+          ),
         ),
       ),
     );

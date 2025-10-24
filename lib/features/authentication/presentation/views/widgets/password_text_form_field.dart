@@ -33,6 +33,8 @@ class _PasswordTextFormFieldState extends State<PasswordTextFormField> {
           icon: Icon(isObsecure ? Icons.visibility : Icons.visibility_off),
         ),
         hintText: 'Password',
+        labelText: 'Password',
+        labelStyle: TextStyle(color: AppColors.ksecondaryColor),
         fillColor: AppColors.kWhiteColor,
         filled: true,
         border: OutlineInputBorder(

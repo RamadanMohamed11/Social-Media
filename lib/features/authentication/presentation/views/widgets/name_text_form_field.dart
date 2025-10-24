@@ -21,6 +21,8 @@ class NameTextFormField extends StatelessWidget {
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.person),
         hintText: 'Name',
+        labelText: 'Name',
+        labelStyle: TextStyle(color: AppColors.ksecondaryColor),
         fillColor: AppColors.kWhiteColor,
         filled: true,
         border: OutlineInputBorder(

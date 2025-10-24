@@ -21,68 +21,77 @@ class HomeViewBody extends StatelessWidget {
         if (state is ProfileOtherUserLoaded) {
           GoRouter.of(context).push(
             AppRouter.kProfile,
-            extra: {
-              'userModel': state.userModel,
-              'posts': state.posts,
-            },
+            extra: {'userModel': state.userModel, 'posts': state.posts},
           );
         } else if (state is ProfileFailure) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Error: ${state.message}")),
-          );
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text("Error: ${state.message}")));
         }
       },
       child: StreamBuilder<List<PostModel>>(
         stream: BlocProvider.of<HomeViewCubit>(context).getPosts(),
         builder: (context, asyncSnapshot) {
-        if (asyncSnapshot.connectionState == ConnectionState.waiting) {
-          return Padding(
-            padding: const EdgeInsets.all(kDefaultPadding),
-            child: ListView.builder(
-              itemCount: 10,
-              itemBuilder: (context, index) {
-                return PostWidget().redacted(
-                  context: context,
-                  redact: true,
-                  configuration: RedactedConfiguration(
-                    animationDuration: Duration(milliseconds: 500),
-                  ),
-                );
-              },
-            ),
-          );
-        }
-        if (asyncSnapshot.hasError) {
-          return Center(child: Text(asyncSnapshot.error.toString()));
-        } else if (asyncSnapshot.hasData) {
-          final List<PostModel> posts = asyncSnapshot.data!;
-          if (posts.isEmpty) {
-            return const Center(
-              child: Text(
-                "No Posts",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-            );
-          } else {
+          if (asyncSnapshot.connectionState == ConnectionState.waiting) {
             return Padding(
               padding: const EdgeInsets.all(kDefaultPadding),
               child: ListView.builder(
-                itemCount: posts.length,
+                itemCount: 10,
                 itemBuilder: (context, index) {
-                  final post = posts[index];
-                  return PostWidget(
-                    userModel: userModel,
-                    post: post,
-                    onOwnerTap: () {
-                      BlocProvider.of<ProfileCubit>(context).loadUserProfile(
-                        uid: post.uid,
-                      );
-                    },
+                  return PostWidget().redacted(
+                    context: context,
+                    redact: true,
+                    configuration: RedactedConfiguration(
+                      animationDuration: Duration(milliseconds: 500),
+                    ),
                   );
                 },
               ),
             );
           }
+          if (asyncSnapshot.hasError) {
+            return Center(child: Text(asyncSnapshot.error.toString()));
+          } else if (asyncSnapshot.hasData) {
+            final List<PostModel> posts = asyncSnapshot.data!;
+            if (posts.isEmpty) {
+              return const Center(
+                child: Text(
+                  "No Posts",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+              );
+            } else {
+              return Padding(
+                padding: const EdgeInsets.all(kDefaultPadding),
+                child: ListView.builder(
+                  itemCount: posts.length,
+                  itemBuilder: (context, index) {
+                    final post = posts[index];
+                    return PostWidget(
+                      userModel: userModel,
+                      post: post,
+                      onOwnerTap: () {
+                        BlocProvider.of<ProfileCubit>(
+                          context,
+                        ).loadUserProfile(uid: post.uid);
+                      },
+                      onLoveTap: () async {
+                        final profileCubit = BlocProvider.of<ProfileCubit>(context);
+                        final currentUser = await profileCubit.profileRepo.getCurrentUser();
+                        
+                        if (post.likes.contains(currentUser.uid)) {
+                          post.likes.remove(currentUser.uid);
+                        } else {
+                          post.likes.add(currentUser.uid);
+                        }
+                        
+                        await BlocProvider.of<HomeViewCubit>(context).lovePost(newPost: post);
+                      },
+                    );
+                  },
+                ),
+              );
+            }
           } else {
             return const Center(child: Text("No Posts"));
           }
