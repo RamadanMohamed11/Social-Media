@@ -4,10 +4,13 @@ import 'package:social_media/core/models/post_model.dart';
 import 'package:social_media/core/models/user_model.dart';
 import 'package:social_media/features/home/presentation/view_model/home_view_cubit/home_view_cubit.dart';
 import 'package:social_media/features/home/presentation/views/widgets/post_widget.dart';
-import 'package:social_media/features/profile/presentation/view_model/cubit/profile_cubit.dart';
 
 class ProfilePostsListView extends StatelessWidget {
-  const ProfilePostsListView({super.key, required this.userModel, required this.currentUserId});
+  const ProfilePostsListView({
+    super.key,
+    required this.userModel,
+    required this.currentUserId,
+  });
   final UserModel userModel;
   final String currentUserId;
 
@@ -33,15 +36,18 @@ class ProfilePostsListView extends StatelessWidget {
                 return PostWidget(
                   userModel: userModel,
                   post: post,
-                  onOwnerTap: null, // Already on profile page, no need to navigate
+                  onOwnerTap:
+                      null, // Already on profile page, no need to navigate
                   onLoveTap: () async {
                     if (post.likes.contains(currentUserId)) {
                       post.likes.remove(currentUserId);
                     } else {
                       post.likes.add(currentUserId);
                     }
-                    
-                    await BlocProvider.of<HomeViewCubit>(context).lovePost(newPost: post);
+
+                    await BlocProvider.of<HomeViewCubit>(
+                      context,
+                    ).lovePost(newPost: post);
                   },
                 );
               },

@@ -4,7 +4,6 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:social_media/core/errors/failures.dart';
 import 'package:social_media/core/models/user_model.dart';
-import 'package:social_media/core/utils/authentication_service.dart';
 import 'package:social_media/core/utils/cloud_service.dart';
 import 'package:social_media/core/utils/storage_service.dart';
 import 'package:social_media/features/edit_profile/data/repos/edit_profile_repo.dart';

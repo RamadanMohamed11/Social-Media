@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:social_media/features/comment/data/models/comment_model.dart';
 
 class PostModel {
   final String pid;
@@ -9,7 +10,7 @@ class PostModel {
   String postImageURL;
   final String caption;
   final List<dynamic> likes;
-  final List<dynamic> comments;
+  final List<CommentModel> comments;
   final DateTime createdAt;
 
   PostModel({
@@ -35,7 +36,12 @@ class PostModel {
       postImageURL: snap['postImageURL'],
       caption: snap['caption'],
       likes: snap['likes'],
-      comments: snap['comments'],
+      comments: (snap['comments'] as List<dynamic>)
+          .map(
+            (commentMap) =>
+                CommentModel.fromMap(commentMap as Map<String, dynamic>),
+          )
+          .toList(),
       createdAt: (snap['createdAt'] as Timestamp).toDate(),
     );
   }
@@ -49,7 +55,7 @@ class PostModel {
     'postImageURL': postImageURL,
     'caption': caption,
     'likes': likes,
-    'comments': comments,
+    'comments': comments.map((comment) => comment.toJson()).toList(),
     'createdAt': createdAt,
   };
 }

@@ -15,12 +15,14 @@ class PostWidget extends StatelessWidget {
     this.post,
     this.onOwnerTap,
     this.onLoveTap,
+    this.onCommentTap,
   });
 
   final UserModel? userModel;
   final PostModel? post;
   final VoidCallback? onOwnerTap;
   final VoidCallback? onLoveTap;
+  final VoidCallback? onCommentTap;
 
   @override
   Widget build(BuildContext context) {

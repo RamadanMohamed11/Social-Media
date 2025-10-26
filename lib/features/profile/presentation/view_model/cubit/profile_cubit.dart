@@ -42,4 +42,11 @@ class ProfileCubit extends Cubit<ProfileState> {
       emit(ProfileFailure(message: e.toString()));
     }
   }
+
+  /// Fetches user data without emitting states - for display purposes only
+  Future<Map<String, dynamic>> getUserData({required String uid}) async {
+    UserModel userModel = await profileRepo.getUser(uid: uid);
+    List<PostModel> posts = await profileRepo.getUserPosts(uid: uid);
+    return {'userModel': userModel, 'posts': posts};
+  }
 }

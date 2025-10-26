@@ -5,6 +5,8 @@ import 'package:social_media/core/utils/app_router.dart';
 import 'package:social_media/core/utils/authentication_service.dart';
 import 'package:social_media/core/utils/service_locator.dart';
 import 'package:social_media/features/add_post/data/repos/add_post_repo.dart';
+import 'package:social_media/features/comment/data/repos/comment_repo.dart';
+import 'package:social_media/features/comment/presentation/view_models/comment_cubit/comment_cubit.dart';
 import 'package:social_media/features/profile/data/repos/profile_repo.dart';
 import 'package:social_media/features/profile/presentation/view_model/cubit/profile_cubit.dart';
 import 'package:social_media/features/add_post/presentation/view_model/add_post_cubit/add_post_cubit.dart';
@@ -55,6 +57,10 @@ class SocialMedia extends StatelessWidget {
         BlocProvider(
           create: (context) =>
               ProfileCubit(profileRepo: getIt.get<ProfileRepo>()),
+        ),
+        BlocProvider(
+          create: (context) =>
+              CommentCubit(commentRepo: getIt.get<CommentRepo>()),
         ),
       ],
       child: MaterialApp.router(
