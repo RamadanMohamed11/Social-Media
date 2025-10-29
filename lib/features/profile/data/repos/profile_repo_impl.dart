@@ -40,7 +40,7 @@ class ProfileRepoImpl implements ProfileRepo {
   @override
   Future<UserModel> getCurrentUser() async {
     try {
-      String uid = (await authService.getCurrentUser()).uid;
+      String uid = (await authService.getCurrentUser())!.uid;
       DocumentSnapshot userDoc = await cloudService.getDocumentById(docId: uid);
       if (!userDoc.exists) {
         throw Exception('User not found');

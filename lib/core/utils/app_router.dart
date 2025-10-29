@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:social_media/core/models/post_model.dart';
 import 'package:social_media/core/models/user_model.dart';
@@ -18,56 +19,67 @@ abstract class AppRouter {
   static const String kEditProfile = '/edit_profile';
   static const String kCommentView = '/comment_view';
 
-  static final GoRouter routes = GoRouter(
-    initialLocation: kLogin,
-    routes: [
-      GoRoute(
-        path: kLogin,
-        builder: (context, state) {
-          return const LoginView();
-        },
-      ),
-      GoRoute(
-        path: kRegister,
-        builder: (context, state) {
-          return const RegisterView();
-        },
-      ),
-      GoRoute(
-        path: kHome,
-        builder: (context, state) {
-          return HomeView(userModel: state.extra as UserModel);
-        },
-      ),
-      GoRoute(
-        path: kLayoutView,
-        builder: (context, state) {
-          return LayoutView(userModel: state.extra as UserModel);
-        },
-      ),
-      GoRoute(
-        path: kProfile,
-        builder: (context, state) {
-          final Map<String, dynamic> extras =
-              state.extra as Map<String, dynamic>;
-          return ProfileView(
-            userModel: extras['userModel'] as UserModel,
-            post: extras['posts'] as List<PostModel>,
-          );
-        },
-      ),
-      GoRoute(
-        path: kEditProfile,
-        builder: (context, state) {
-          return EditProfileView(userModel: state.extra as UserModel);
-        },
-      ),
-      GoRoute(
-        path: kCommentView,
-        builder: (context, state) {
-          return CommentView(post: state.extra as PostModel);
-        },
-      ),
-    ],
-  );
+  static GoRouter createRouter({
+    required String initialRoute,
+    UserModel? initialUser,
+  }) {
+    return GoRouter(
+      initialLocation: initialRoute,
+      routes: [
+        GoRoute(
+          path: kLogin,
+          builder: (context, state) {
+            return const LoginView();
+          },
+        ),
+        GoRoute(
+          path: kRegister,
+          builder: (context, state) {
+            return const RegisterView();
+          },
+        ),
+        GoRoute(
+          path: kHome,
+          builder: (context, state) {
+            return HomeView(userModel: state.extra as UserModel);
+          },
+        ),
+        GoRoute(
+          path: kLayoutView,
+          builder: (context, state) {
+            final UserModel? user = (state.extra ?? initialUser) as UserModel?;
+            if (user == null) {
+              return const Scaffold(
+                body: Center(child: CircularProgressIndicator()),
+              );
+            }
+            return LayoutView(userModel: user);
+          },
+        ),
+        GoRoute(
+          path: kProfile,
+          builder: (context, state) {
+            final Map<String, dynamic> extras =
+                state.extra as Map<String, dynamic>;
+            return ProfileView(
+              userModel: extras['userModel'] as UserModel,
+              post: extras['posts'] as List<PostModel>,
+            );
+          },
+        ),
+        GoRoute(
+          path: kEditProfile,
+          builder: (context, state) {
+            return EditProfileView(userModel: state.extra as UserModel);
+          },
+        ),
+        GoRoute(
+          path: kCommentView,
+          builder: (context, state) {
+            return CommentView(post: state.extra as PostModel);
+          },
+        ),
+      ],
+    );
+  }
 }

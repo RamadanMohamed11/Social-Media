@@ -10,7 +10,7 @@ class CommentView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: FittedBox(fit: BoxFit.scaleDown, child: Text('Comments')),
+        title: const FittedBox(fit: BoxFit.scaleDown, child: Text('Comments')),
         surfaceTintColor: Colors.transparent,
         backgroundColor: Colors.transparent,
         elevation: 0,

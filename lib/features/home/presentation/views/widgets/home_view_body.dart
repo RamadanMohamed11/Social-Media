@@ -38,11 +38,11 @@ class HomeViewBody extends StatelessWidget {
               child: ListView.builder(
                 itemCount: 10,
                 itemBuilder: (context, index) {
-                  return PostWidget().redacted(
+                  return const PostWidget().redacted(
                     context: context,
                     redact: true,
                     configuration: RedactedConfiguration(
-                      animationDuration: Duration(milliseconds: 500),
+                      animationDuration: const Duration(milliseconds: 500),
                     ),
                   );
                 },
@@ -76,16 +76,21 @@ class HomeViewBody extends StatelessWidget {
                         ).loadUserProfile(uid: post.uid);
                       },
                       onLoveTap: () async {
-                        final profileCubit = BlocProvider.of<ProfileCubit>(context);
-                        final currentUser = await profileCubit.profileRepo.getCurrentUser();
-                        
+                        final profileCubit = BlocProvider.of<ProfileCubit>(
+                          context,
+                        );
+                        final currentUser = await profileCubit.profileRepo
+                            .getCurrentUser();
+
                         if (post.likes.contains(currentUser.uid)) {
                           post.likes.remove(currentUser.uid);
                         } else {
                           post.likes.add(currentUser.uid);
                         }
-                        
-                        await BlocProvider.of<HomeViewCubit>(context).lovePost(newPost: post);
+
+                        await BlocProvider.of<HomeViewCubit>(
+                          context,
+                        ).lovePost(newPost: post);
                       },
                     );
                   },

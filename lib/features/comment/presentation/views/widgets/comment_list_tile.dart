@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:redacted/redacted.dart';
 import 'package:social_media/constants.dart';
 import 'package:social_media/core/helper/time_ago_from.dart';
-import 'package:social_media/core/models/user_model.dart';
 import 'package:social_media/core/utils/app_colors.dart';
 import 'package:social_media/core/utils/app_router.dart';
 import 'package:social_media/core/utils/assets_data.dart';
@@ -24,27 +24,32 @@ class CommentListTile extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Padding(
-            padding: EdgeInsets.symmetric(vertical: kDefaultPadding / 2),
+            padding: const EdgeInsets.symmetric(vertical: kDefaultPadding / 2),
             child: ListTile(
               isThreeLine: true,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
-              trailing: Text(timeAgoFrom(commentModel.createdAt)),
+              trailing: const Text('    '),
               tileColor: AppColors.kWhiteColor,
-              leading: CircleAvatar(
+              leading: const CircleAvatar(
                 backgroundColor: AppColors.kWhiteColor,
-                child: CircularProgressIndicator(strokeWidth: 2),
               ),
-              title: Text('Loading...'),
-              subtitle: Text(commentModel.comment),
+              title: const Text('                  '),
+              subtitle: const Text('                      '),
+            ),
+          ).redacted(
+            context: context,
+            redact: true,
+            configuration: RedactedConfiguration(
+              animationDuration: const Duration(milliseconds: 500),
             ),
           );
         }
 
         if (snapshot.hasError) {
           return Padding(
-            padding: EdgeInsets.symmetric(vertical: kDefaultPadding / 2),
+            padding: const EdgeInsets.symmetric(vertical: kDefaultPadding / 2),
             child: ListTile(
               isThreeLine: true,
               shape: RoundedRectangleBorder(
@@ -52,11 +57,11 @@ class CommentListTile extends StatelessWidget {
               ),
               trailing: Text(timeAgoFrom(commentModel.createdAt)),
               tileColor: AppColors.kWhiteColor,
-              leading: CircleAvatar(
+              leading: const CircleAvatar(
                 backgroundColor: AppColors.kWhiteColor,
                 backgroundImage: AssetImage(AssetsData.man),
               ),
-              title: Text('Unknown User'),
+              title: const Text('Unknown User'),
               subtitle: Text(commentModel.comment),
             ),
           );
@@ -72,7 +77,7 @@ class CommentListTile extends StatelessWidget {
             );
           },
           child: Padding(
-            padding: EdgeInsets.symmetric(vertical: kDefaultPadding / 2),
+            padding: const EdgeInsets.symmetric(vertical: kDefaultPadding / 2),
             child: ListTile(
               isThreeLine: true,
               shape: RoundedRectangleBorder(
@@ -84,7 +89,7 @@ class CommentListTile extends StatelessWidget {
                 backgroundColor: AppColors.kWhiteColor,
                 backgroundImage: user.profileImage.isNotEmpty
                     ? NetworkImage(user.profileImage)
-                    : AssetImage(AssetsData.man) as ImageProvider,
+                    : const AssetImage(AssetsData.man) as ImageProvider,
               ),
               title: Text(user.name),
               subtitle: Text(commentModel.comment),

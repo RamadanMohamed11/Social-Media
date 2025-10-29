@@ -59,7 +59,7 @@ class _CommentViewBodyState extends State<CommentViewBody> {
                     },
                   ),
                 ),
-                Gap(10),
+                const Gap(10),
                 Row(
                   children: [
                     Expanded(
@@ -68,22 +68,22 @@ class _CommentViewBodyState extends State<CommentViewBody> {
                         onSaved: commentOnSavedMethod,
                       ),
                     ),
-                    Gap(5),
+                    const Gap(5),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.kPrimaryColor,
                         foregroundColor: AppColors.kWhiteColor,
-                        shape: CircleBorder(),
-                        padding: EdgeInsets.all(12),
+                        shape: const CircleBorder(),
+                        padding: const EdgeInsets.all(12),
                       ),
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
                           _formKey.currentState!.save();
-                          UserModel currentUser = await getIt
+                          UserModel? currentUser = await getIt
                               .get<AuthenticationService>()
                               .getCurrentUser();
                           CommentModel commentModel = CommentModel(
-                            uid: currentUser.uid,
+                            uid: currentUser!.uid,
                             comment: _commentController.text,
                             createdAt: DateTime.now(),
                           );
