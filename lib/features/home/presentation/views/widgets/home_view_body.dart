@@ -18,7 +18,7 @@ class HomeViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<ProfileCubit, ProfileState>(
       listener: (context, state) {
-        if (state is ProfileOtherUserLoaded) {
+        if (state is ProfileOtherUserLoaded && state.shouldNavigate) {
           GoRouter.of(context).push(
             AppRouter.kProfile,
             extra: {'userModel': state.userModel, 'posts': state.posts},

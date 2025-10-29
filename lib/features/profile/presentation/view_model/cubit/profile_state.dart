@@ -9,7 +9,6 @@ final class ProfileLoading extends ProfileState {}
 
 final class ProfileCurrentUserLoaded extends ProfileState {
   final UserModel userModel;
-
   final List<PostModel> posts;
 
   ProfileCurrentUserLoaded({required this.userModel, required this.posts});
@@ -18,8 +17,13 @@ final class ProfileCurrentUserLoaded extends ProfileState {
 final class ProfileOtherUserLoaded extends ProfileState {
   final UserModel userModel;
   final List<PostModel> posts;
+  final bool shouldNavigate;
 
-  ProfileOtherUserLoaded({required this.userModel, required this.posts});
+  ProfileOtherUserLoaded({
+    required this.userModel,
+    required this.posts,
+    this.shouldNavigate = true,
+  });
 }
 
 final class ProfileFailure extends ProfileState {
@@ -27,3 +31,5 @@ final class ProfileFailure extends ProfileState {
 
   ProfileFailure({required this.message});
 }
+
+final class ProfileFollowSuccess extends ProfileState {}

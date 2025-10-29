@@ -24,21 +24,12 @@ class ProfileCubit extends Cubit<ProfileState> {
   }
 
   Future<void> loadUserProfile({required String uid}) async {
-    print("ProfileCubit: Starting loadUserProfile with uid: $uid");
     emit(ProfileLoading());
     try {
-      print("ProfileCubit: Fetching user data");
       UserModel userModel = await profileRepo.getUser(uid: uid);
-      print("ProfileCubit: User data fetched successfully");
-
-      print("ProfileCubit: Fetching user posts");
       List<PostModel> posts = await profileRepo.getUserPosts(uid: uid);
-      print("ProfileCubit: Posts fetched successfully");
-
-      print("ProfileCubit: Emitting ProfileOtherUserLoaded");
       emit(ProfileOtherUserLoaded(userModel: userModel, posts: posts));
     } catch (e) {
-      print("ProfileCubit: Error occurred: $e");
       emit(ProfileFailure(message: e.toString()));
     }
   }
@@ -48,5 +39,42 @@ class ProfileCubit extends Cubit<ProfileState> {
     UserModel userModel = await profileRepo.getUser(uid: uid);
     List<PostModel> posts = await profileRepo.getUserPosts(uid: uid);
     return {'userModel': userModel, 'posts': posts};
+  }
+
+  Future<void> followUser({
+    required UserModel followingUser,
+    required UserModel followerUser,
+    required bool isViewingCurrentUser,
+  }) async {
+    emit(ProfileLoading());
+    try {
+      await profileRepo.followUser(
+        followingUser: followingUser,
+        followerUser: followerUser,
+      );
+      emit(ProfileFollowSuccess());
+
+      if (isViewingCurrentUser) {
+        UserModel userModel = await profileRepo.getCurrentUser();
+        List<PostModel> posts = await profileRepo.getUserPosts(
+          uid: userModel.uid,
+        );
+        emit(ProfileCurrentUserLoaded(userModel: userModel, posts: posts));
+      } else {
+        UserModel userModel = await profileRepo.getUser(uid: followerUser.uid);
+        List<PostModel> posts = await profileRepo.getUserPosts(
+          uid: followerUser.uid,
+        );
+        emit(
+          ProfileOtherUserLoaded(
+            userModel: userModel,
+            posts: posts,
+            shouldNavigate: false,
+          ),
+        );
+      }
+    } catch (e) {
+      emit(ProfileFailure(message: e.toString()));
+    }
   }
 }

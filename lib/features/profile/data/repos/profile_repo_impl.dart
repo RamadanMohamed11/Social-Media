@@ -40,7 +40,7 @@ class ProfileRepoImpl implements ProfileRepo {
   @override
   Future<UserModel> getCurrentUser() async {
     try {
-      String uid = (await authService.getCurrentUser())!.uid;
+      String uid = (await authService.getCurrentUser()).uid;
       DocumentSnapshot userDoc = await cloudService.getDocumentById(docId: uid);
       if (!userDoc.exists) {
         throw Exception('User not found');
@@ -61,6 +61,27 @@ class ProfileRepoImpl implements ProfileRepo {
         throw Exception('User not found');
       }
       return UserModel.fromSnap(userDoc);
+    } on FirebaseException catch (e) {
+      throw CloudFailure.fromException(e);
+    } catch (e) {
+      throw CloudFailure(e.toString());
+    }
+  }
+
+  @override
+  Future<void> followUser({
+    required UserModel followingUser,
+    required UserModel followerUser,
+  }) async {
+    try {
+      await cloudService.updateData(
+        obj: followingUser.toJson(),
+        docId: followingUser.uid,
+      );
+      await cloudService.updateData(
+        obj: followerUser.toJson(),
+        docId: followerUser.uid,
+      );
     } on FirebaseException catch (e) {
       throw CloudFailure.fromException(e);
     } catch (e) {

@@ -37,7 +37,7 @@ class _SearchViewBodyState extends State<SearchViewBody> {
   Widget build(BuildContext context) {
     return BlocListener<ProfileCubit, ProfileState>(
       listener: (context, state) {
-        if (state is ProfileOtherUserLoaded) {
+        if (state is ProfileOtherUserLoaded && state.shouldNavigate) {
           GoRouter.of(context).push(
             AppRouter.kProfile,
             extra: {'userModel': state.userModel, 'posts': state.posts},
@@ -58,7 +58,7 @@ class _SearchViewBodyState extends State<SearchViewBody> {
                 setState(() {});
               },
             ),
-            Gap(10),
+            const Gap(10),
             Expanded(
               child: StreamBuilder<List<UserModel>>(
                 stream: BlocProvider.of<SearchCubit>(context).searchUsers(),
@@ -93,7 +93,9 @@ class _SearchViewBodyState extends State<SearchViewBody> {
                               ),
                               title: Text(
                                 users[index].name,
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                               subtitle: Text("@${users[index].username}"),
                             ),
@@ -101,7 +103,7 @@ class _SearchViewBodyState extends State<SearchViewBody> {
                         },
                       );
                     } else if (_searchController.text.isEmpty) {
-                      return Center(
+                      return const Center(
                         child: Text(
                           'Search For Users',
                           style: TextStyle(fontSize: 20),

@@ -6,4 +6,8 @@ abstract class ProfileRepo {
   Future<UserModel> getCurrentUser();
 
   Future<UserModel> getUser({required String uid});
+  Future<void> followUser({
+    required UserModel followingUser,
+    required UserModel followerUser,
+  });
 }
