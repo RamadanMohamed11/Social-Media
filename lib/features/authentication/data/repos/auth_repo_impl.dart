@@ -24,7 +24,7 @@ class AuthRepoImpl implements AuthRepo {
         name: name,
         username: username,
       );
-      return Right(1);
+      return const Right(1);
     } on FirebaseAuthException catch (e) {
       return Left(AuthFailure.fromFirebaseAuthException(e));
     } catch (e) {
@@ -54,7 +54,7 @@ class AuthRepoImpl implements AuthRepo {
   Future<Either<Failure, void>> signOut() async {
     try {
       await authenticationService.signOut();
-      return Right(null);
+      return const Right(null);
     } on FirebaseAuthException catch (e) {
       return Left(AuthFailure.fromFirebaseAuthException(e));
     } catch (e) {

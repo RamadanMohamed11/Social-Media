@@ -39,10 +39,10 @@ class _AddPostViewBodyState extends State<AddPostViewBody> {
     return Form(
       key: formKey,
       child: Padding(
-        padding: EdgeInsets.all(kDefaultPadding),
+        padding: const EdgeInsets.all(kDefaultPadding),
         child: Column(
           children: [
-            Gap(20),
+            const Gap(20),
             Row(
               children: [
                 const Text(
@@ -59,12 +59,16 @@ class _AddPostViewBodyState extends State<AddPostViewBody> {
                 ),
               ],
             ),
-            Gap(20),
+            const Gap(20),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CircleAvatar(backgroundImage: AssetImage(AssetsData.man)),
-                Gap(10),
+                CircleAvatar(
+                  backgroundImage: widget.userModel.profileImage.isNotEmpty
+                      ? NetworkImage(widget.userModel.profileImage)
+                      : const AssetImage(AssetsData.man),
+                ),
+                const Gap(10),
                 Expanded(
                   child: PostTextFormField(
                     controller: controller,
@@ -74,7 +78,7 @@ class _AddPostViewBodyState extends State<AddPostViewBody> {
               ],
             ),
             image == null
-                ? Spacer()
+                ? const Spacer()
                 : Expanded(
                     child: PickedImage(image: image, onPressed: removeImage),
                   ),
@@ -94,7 +98,7 @@ class _AddPostViewBodyState extends State<AddPostViewBody> {
 
   void onPostPressed() {
     if (formKey.currentState!.validate()) {
-      var pid = Uuid().v4();
+      var pid = const Uuid().v4();
 
       PostModel post = PostModel(
         pid: pid,

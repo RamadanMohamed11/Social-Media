@@ -16,7 +16,7 @@ class StorageService {
     await ref.uploadBinary(
       fileName,
       file,
-      fileOptions: FileOptions(upsert: false, cacheControl: '3600'),
+      fileOptions: const FileOptions(upsert: false, cacheControl: '3600'),
     );
     return ref.getPublicUrl(fileName);
   }
@@ -28,13 +28,19 @@ class StorageService {
     await supabase.storage.from(bucketId).remove([fileName]);
   }
 
-  Future<void> updateData({
+  Future<String> updateData({
     required String bucketId,
     required String fileName,
     required Uint8List file,
   }) async {
-    // delete then add
-    await deleteData(bucketId: bucketId, fileName: fileName);
-    await uploadData(bucketId: bucketId, fileName: fileName, file: file);
+    final ref = supabase.storage.from(bucketId);
+    await ref.uploadBinary(
+      fileName,
+      file,
+      fileOptions: const FileOptions(upsert: true, cacheControl: '3600'),
+    );
+    // Add timestamp parameter to force cache refresh when image is updated
+    final timestamp = DateTime.now().millisecondsSinceEpoch;
+    return '${ref.getPublicUrl(fileName)}?v=$timestamp';
   }
 }

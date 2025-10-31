@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:social_media/core/models/user_model.dart';
@@ -14,11 +15,13 @@ class UserImageAndFollowInfo extends StatelessWidget {
       children: [
         CircleAvatar(
           radius: 40,
-          backgroundImage: Image.asset(AssetsData.man).image,
+          foregroundImage: userModel.profileImage.isNotEmpty
+              ? CachedNetworkImageProvider(userModel.profileImage)
+              : Image.asset(AssetsData.man).image,
         ),
-        Spacer(),
+        const Spacer(),
         FollowsAndFollowersWidget(userModel: userModel, isFollowers: true),
-        Gap(5),
+        const Gap(5),
         FollowsAndFollowersWidget(userModel: userModel, isFollowers: false),
       ],
     );

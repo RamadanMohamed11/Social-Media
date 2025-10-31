@@ -9,6 +9,8 @@ import 'package:social_media/features/authentication/data/repos/auth_repo.dart';
 import 'package:social_media/features/authentication/data/repos/auth_repo_impl.dart';
 import 'package:social_media/features/comment/data/repos/comment_repo.dart';
 import 'package:social_media/features/comment/data/repos/comment_repo_impl.dart';
+import 'package:social_media/features/edit_profile/data/repos/edit_profile_repo.dart';
+import 'package:social_media/features/edit_profile/data/repos/edit_profile_repo_impl.dart';
 import 'package:social_media/features/home/data/repos/home_repo.dart';
 import 'package:social_media/features/home/data/repos/home_repo_impl.dart';
 import 'package:social_media/features/profile/data/repos/profile_repo.dart';
@@ -57,6 +59,13 @@ void setupServiceLocator() {
   getIt.registerSingleton<AddPostRepo>(
     AddPostRepoImpl(
       cloudService: getIt.get<CloudService>(instanceName: 'posts'),
+      storageService: getIt.get<StorageService>(),
+    ),
+  );
+
+  getIt.registerSingleton<EditProfileRepo>(
+    EditProfileRepoImpl(
+      cloudService: getIt.get<CloudService>(instanceName: 'users'),
       storageService: getIt.get<StorageService>(),
     ),
   );

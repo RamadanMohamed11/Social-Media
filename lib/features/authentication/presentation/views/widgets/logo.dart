@@ -13,7 +13,10 @@ class Logo extends StatelessWidget {
         AssetsData.nLogo,
         width: 150,
         height: 150,
-        colorFilter: ColorFilter.mode(AppColors.kPrimaryColor, BlendMode.srcIn),
+        colorFilter: const ColorFilter.mode(
+          AppColors.kPrimaryColor,
+          BlendMode.srcIn,
+        ),
       ),
     );
   }

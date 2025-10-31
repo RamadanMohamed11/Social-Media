@@ -39,7 +39,7 @@ class PostedImage extends StatelessWidget {
                     context: context,
                     redact: true,
                     configuration: RedactedConfiguration(
-                      animationDuration: Duration(milliseconds: 450),
+                      animationDuration: const Duration(milliseconds: 450),
                     ),
                   ),
             );

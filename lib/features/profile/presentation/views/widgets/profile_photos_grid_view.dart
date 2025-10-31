@@ -26,7 +26,7 @@ class ProfilePhotosGridView extends StatelessWidget {
 
           if (posts.isNotEmpty) {
             return GridView.builder(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
                 crossAxisSpacing: 5,
@@ -38,12 +38,12 @@ class ProfilePhotosGridView extends StatelessWidget {
                   : posts.length,
               itemBuilder: (context, index) {
                 return asyncSnapshot.connectionState == ConnectionState.waiting
-                    ? PostedImage()
+                    ? const PostedImage()
                     : PostedImage(post: posts[index]);
               },
             );
           } else {
-            return Center(child: Text("No Photos"));
+            return const Center(child: Text("No Photos"));
           }
         } else {
           return Center(child: Text(asyncSnapshot.error.toString()));

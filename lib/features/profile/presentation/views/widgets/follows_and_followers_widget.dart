@@ -32,19 +32,19 @@ class FollowsAndFollowersWidget extends StatelessWidget {
             imageList: [AssetsData.man, AssetsData.woman],
             totalCount: 2,
           ),
-          Gap(5),
+          const Gap(5),
           Row(
             children: [
               Text(
                 isFollowers
                     ? userModel.followers.length.toString()
                     : userModel.following.length.toString(),
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: const TextStyle(fontWeight: FontWeight.bold),
               ),
-              Gap(5),
+              const Gap(5),
               Text(
                 isFollowers ? "Followers" : "Following",
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: const TextStyle(fontWeight: FontWeight.bold),
               ),
             ],
           ),

@@ -117,20 +117,20 @@ class _UserInfoAndContactButtonsState extends State<UserInfoAndContactButtons> {
                           ],
                         ),
                       ),
-                const Gap(5),
-                widget.isCurrentUser
-                    ? const SizedBox()
-                    : IconButton(
-                        onPressed: () {},
-                        style: IconButton.styleFrom(
-                          backgroundColor: AppColors.kWhiteColor,
-                          foregroundColor: AppColors.kPrimaryColor,
-                          shape: const CircleBorder(
-                            side: BorderSide(color: AppColors.kPrimaryColor),
-                          ),
-                        ),
-                        icon: const Icon(Icons.message),
-                      ),
+                // const Gap(5),
+                // widget.isCurrentUser
+                //     ? const SizedBox()
+                //     : IconButton(
+                //         onPressed: () {},
+                //         style: IconButton.styleFrom(
+                //           backgroundColor: AppColors.kWhiteColor,
+                //           foregroundColor: AppColors.kPrimaryColor,
+                //           shape: const CircleBorder(
+                //             side: BorderSide(color: AppColors.kPrimaryColor),
+                //           ),
+                //         ),
+                //         icon: const Icon(Icons.message),
+                //       ),
               ],
             );
           },

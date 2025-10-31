@@ -29,7 +29,7 @@ class AddPostRepoImpl implements AddPostRepo {
       }
       await cloudService.storeData(obj: post.toJson(), docId: post.pid);
 
-      return Right(1);
+      return const Right(1);
     } on FirebaseException catch (e) {
       return Left(CloudFailure.fromException(e));
     } catch (e) {

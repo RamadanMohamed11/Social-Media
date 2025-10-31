@@ -83,7 +83,7 @@ class _CommentViewBodyState extends State<CommentViewBody> {
                               .get<AuthenticationService>()
                               .getCurrentUser();
                           CommentModel commentModel = CommentModel(
-                            uid: currentUser!.uid,
+                            uid: currentUser.uid,
                             comment: _commentController.text,
                             createdAt: DateTime.now(),
                           );

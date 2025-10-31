@@ -18,7 +18,7 @@ class HomeViewCubit extends Cubit<HomeViewState> {
       return result;
     } catch (e) {
       emit(HomeViewError(e.toString()));
-      return Stream<List<PostModel>>.empty();
+      return const Stream<List<PostModel>>.empty();
     }
   }
 

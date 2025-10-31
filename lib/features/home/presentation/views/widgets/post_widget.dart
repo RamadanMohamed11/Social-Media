@@ -12,6 +12,7 @@ class PostWidget extends StatelessWidget {
   const PostWidget({
     super.key,
     this.userModel,
+    this.postUserModel,
     this.post,
     this.onOwnerTap,
     this.onLoveTap,
@@ -19,6 +20,7 @@ class PostWidget extends StatelessWidget {
   });
 
   final UserModel? userModel;
+  final UserModel? postUserModel;
   final PostModel? post;
   final VoidCallback? onOwnerTap;
   final VoidCallback? onLoveTap;
@@ -37,9 +39,13 @@ class PostWidget extends StatelessWidget {
         children: [
           InkWell(
             onTap: onOwnerTap,
-            child: OwnerInfo(post: post, userModel: userModel),
+            child: OwnerInfo(
+              post: post,
+              userModel: userModel,
+              postUserModel: postUserModel,
+            ),
           ),
-          Gap(10),
+          const Gap(10),
           post != null && post!.postImageURL.isNotEmpty
               ? InkWell(
                   onTap: () {
@@ -48,7 +54,7 @@ class PostWidget extends StatelessWidget {
                   child: PostedImage(post: post),
                 )
               : const SizedBox(),
-          Gap(10),
+          const Gap(10),
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
@@ -64,7 +70,7 @@ class PostWidget extends StatelessWidget {
               child: Text(post != null ? "See More" : "           "),
             ),
           ),
-          Gap(10),
+          const Gap(10),
           InteractionButtons(
             post: post,
             onLoveTap: onLoveTap,
@@ -97,7 +103,7 @@ class PostWidget extends StatelessWidget {
                 top: 10,
                 right: 10,
                 child: IconButton(
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.close,
                     color: AppColors.kWhiteColor,
                     size: 30,

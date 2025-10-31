@@ -82,25 +82,25 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                       key: _formKey,
                       child: Column(
                         children: [
-                          Logo(),
-                          Gap(20),
-                          Widget0616(),
-                          Gap(20),
+                          const Logo(),
+                          const Gap(20),
+                          const Widget0616(),
+                          const Gap(20),
                           const Text(
                             'Welcome Back',
                             style: TextStyle(fontSize: 24),
                           ),
-                          Gap(30),
+                          const Gap(30),
                           EmailTextFormField(
                             controller: emailController,
                             onSaved: emailOnSavedMethod,
                           ),
-                          Gap(20),
+                          const Gap(20),
                           PasswordTextFormField(
                             controller: passwordController,
                             onSaved: passwordOnSavedMethod,
                           ),
-                          Gap(30),
+                          const Gap(30),
                           CustomButton(
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
@@ -115,8 +115,8 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                             },
                             text: 'login',
                           ),
-                          Gap(30),
-                          RegisterNowWidget(isLogin: true),
+                          const Gap(30),
+                          const RegisterNowWidget(isLogin: true),
                         ],
                       ),
                     );

@@ -15,10 +15,10 @@ class BioTextField extends StatelessWidget {
       },
 
       decoration: InputDecoration(
-        prefixIcon: Icon(Icons.info_outline),
+        prefixIcon: const Icon(Icons.info_outline),
         hintText: 'Bio',
         labelText: 'Bio',
-        labelStyle: TextStyle(color: AppColors.ksecondaryColor),
+        labelStyle: const TextStyle(color: AppColors.ksecondaryColor),
 
         fillColor: AppColors.kWhiteColor,
         filled: true,
@@ -29,7 +29,7 @@ class BioTextField extends StatelessWidget {
 
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide(color: AppColors.kPrimaryColor),
+          borderSide: const BorderSide(color: AppColors.kPrimaryColor),
         ),
       ),
     );

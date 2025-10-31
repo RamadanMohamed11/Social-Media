@@ -17,8 +17,7 @@ class HomeView extends StatelessWidget {
         backgroundColor: AppColors.kWhiteColor.withValues(alpha: 0.9),
         elevation: 0,
         centerTitle: true,
-        title: Widget0616(),
-        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.message))],
+        title: const Widget0616(),
       ),
       body: HomeViewBody(userModel: userModel),
     );

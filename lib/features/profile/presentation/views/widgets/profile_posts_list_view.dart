@@ -29,7 +29,7 @@ class ProfilePostsListView extends StatelessWidget {
 
           if (posts.isNotEmpty) {
             return ListView.builder(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               itemCount: posts.length,
               itemBuilder: (context, index) {
                 final post = posts[index];
@@ -53,7 +53,7 @@ class ProfilePostsListView extends StatelessWidget {
               },
             );
           } else {
-            return Center(child: Text("No Photos"));
+            return const Center(child: Text("No Photos"));
           }
         } else {
           return Center(child: Text(asyncSnapshot.error.toString()));

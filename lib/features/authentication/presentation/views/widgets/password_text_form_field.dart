@@ -24,7 +24,7 @@ class _PasswordTextFormFieldState extends State<PasswordTextFormField> {
       onSaved: widget.onSaved,
       controller: widget.controller,
       decoration: InputDecoration(
-        prefixIcon: Icon(Icons.password),
+        prefixIcon: const Icon(Icons.password),
         suffixIcon: IconButton(
           onPressed: () {
             isObsecure = !isObsecure;
@@ -34,7 +34,7 @@ class _PasswordTextFormFieldState extends State<PasswordTextFormField> {
         ),
         hintText: 'Password',
         labelText: 'Password',
-        labelStyle: TextStyle(color: AppColors.ksecondaryColor),
+        labelStyle: const TextStyle(color: AppColors.ksecondaryColor),
         fillColor: AppColors.kWhiteColor,
         filled: true,
         border: OutlineInputBorder(
@@ -44,7 +44,7 @@ class _PasswordTextFormFieldState extends State<PasswordTextFormField> {
 
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide(color: AppColors.kPrimaryColor),
+          borderSide: const BorderSide(color: AppColors.kPrimaryColor),
         ),
       ),
     );

@@ -8,12 +8,12 @@ class PickImageButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         shape: const CircleBorder(),
         backgroundColor: AppColors.ksecondaryColor,
       ),
       onPressed: onPressed,
-      child: Icon(
+      child: const Icon(
         Icons.camera_alt_outlined,
         color: AppColors.kWhiteColor,
         size: 25,

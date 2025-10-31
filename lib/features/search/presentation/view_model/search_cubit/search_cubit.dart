@@ -18,7 +18,7 @@ class SearchCubit extends Cubit<SearchState> {
       });
     } catch (e) {
       emit(SearchFailure(message: e.toString()));
-      return Stream<List<UserModel>>.empty();
+      return const Stream<List<UserModel>>.empty();
     }
   }
 }

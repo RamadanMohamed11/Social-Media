@@ -28,28 +28,28 @@ class EditProfileRepoImpl implements EditProfileRepo {
   }
 
   @override
-  Future<Either<Failure, void>> editProfile({
+  Future<Either<Failure, UserModel>> editProfile({
     required UserModel userModel,
+    Uint8List? userImage,
   }) async {
     try {
       await cloudService.updateData(
         obj: userModel.toJson(),
         docId: userModel.uid,
       );
-
-      // Convert URL to bytes if it's a URL
-      if (userModel.profileImage.startsWith('http')) {
-        final imageBytes = await _urlToBytes(userModel.profileImage);
-        if (imageBytes != null) {
-          await storageService.updateData(
-            bucketId: 'avatars',
-            fileName: userModel.uid,
-            file: imageBytes,
-          );
-        }
+      if (userImage != null) {
+        userModel.profileImage = await storageService.updateData(
+          bucketId: 'avatars',
+          fileName: userModel.uid,
+          file: userImage,
+        );
       }
+      await cloudService.storeData(
+        obj: userModel.toJson(),
+        docId: userModel.uid,
+      );
 
-      return Right(null);
+      return Right(userModel);
     } on FirebaseException catch (e) {
       return Left(CloudFailure.fromException(e));
     } catch (e) {

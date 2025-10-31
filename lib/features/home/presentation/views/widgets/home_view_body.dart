@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -6,6 +7,8 @@ import 'package:social_media/constants.dart';
 import 'package:social_media/core/models/post_model.dart';
 import 'package:social_media/core/models/user_model.dart';
 import 'package:social_media/core/utils/app_router.dart';
+import 'package:social_media/core/utils/cloud_service.dart';
+import 'package:social_media/core/utils/service_locator.dart';
 import 'package:social_media/features/home/presentation/view_model/home_view_cubit/home_view_cubit.dart';
 import 'package:social_media/features/home/presentation/views/widgets/post_widget.dart';
 import 'package:social_media/features/profile/presentation/view_model/cubit/profile_cubit.dart';
@@ -13,6 +16,13 @@ import 'package:social_media/features/profile/presentation/view_model/cubit/prof
 class HomeViewBody extends StatelessWidget {
   const HomeViewBody({super.key, required this.userModel});
   final UserModel userModel;
+
+  Future<UserModel> getThePostUserModel({required String uid}) async {
+    final DocumentSnapshot doc = await getIt
+        .get<CloudService>(instanceName: 'users')
+        .getDataById(docId: uid);
+    return UserModel.fromSnap(doc);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,30 +77,51 @@ class HomeViewBody extends StatelessWidget {
                   itemCount: posts.length,
                   itemBuilder: (context, index) {
                     final post = posts[index];
-                    return PostWidget(
-                      userModel: userModel,
-                      post: post,
-                      onOwnerTap: () {
-                        BlocProvider.of<ProfileCubit>(
-                          context,
-                        ).loadUserProfile(uid: post.uid);
-                      },
-                      onLoveTap: () async {
-                        final profileCubit = BlocProvider.of<ProfileCubit>(
-                          context,
-                        );
-                        final currentUser = await profileCubit.profileRepo
-                            .getCurrentUser();
+                    return FutureBuilder(
+                      future: getThePostUserModel(uid: post.uid),
+                      builder: (context, asyncSnapshot) {
+                        if (asyncSnapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const PostWidget().redacted(
+                            context: context,
+                            redact: true,
+                            configuration: RedactedConfiguration(
+                              animationDuration: const Duration(milliseconds: 500),
+                            ),
+                          );
+                        } else if (asyncSnapshot.hasData) {
+                          final UserModel postUserModel = asyncSnapshot.data!;
+                          return PostWidget(
+                            userModel: userModel,
+                            postUserModel: postUserModel,
+                            post: post,
+                            onOwnerTap: () {
+                              BlocProvider.of<ProfileCubit>(
+                                context,
+                              ).loadUserProfile(uid: post.uid);
+                            },
+                            onLoveTap: () async {
+                              final profileCubit =
+                                  BlocProvider.of<ProfileCubit>(context);
+                              final currentUser = await profileCubit.profileRepo
+                                  .getCurrentUser();
 
-                        if (post.likes.contains(currentUser.uid)) {
-                          post.likes.remove(currentUser.uid);
+                              if (post.likes.contains(currentUser.uid)) {
+                                post.likes.remove(currentUser.uid);
+                              } else {
+                                post.likes.add(currentUser.uid);
+                              }
+
+                              await BlocProvider.of<HomeViewCubit>(
+                                context,
+                              ).lovePost(newPost: post);
+                            },
+                          );
                         } else {
-                          post.likes.add(currentUser.uid);
+                          return Center(
+                            child: Text(asyncSnapshot.error.toString()),
+                          );
                         }
-
-                        await BlocProvider.of<HomeViewCubit>(
-                          context,
-                        ).lovePost(newPost: post);
                       },
                     );
                   },

@@ -19,7 +19,7 @@ class CommentTextFormField extends StatelessWidget {
       onSaved: onSaved,
       decoration: InputDecoration(
         labelText: 'Type your comment here...',
-        labelStyle: TextStyle(color: AppColors.ksecondaryColor),
+        labelStyle: const TextStyle(color: AppColors.ksecondaryColor),
         fillColor: AppColors.kWhiteColor,
         filled: true,
         border: OutlineInputBorder(
@@ -29,7 +29,7 @@ class CommentTextFormField extends StatelessWidget {
 
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide(color: AppColors.kPrimaryColor),
+          borderSide: const BorderSide(color: AppColors.kPrimaryColor),
         ),
       ),
     );

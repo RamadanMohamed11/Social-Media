@@ -87,9 +87,10 @@ class _SearchViewBodyState extends State<SearchViewBody> {
                             child: ListTile(
                               leading: CircleAvatar(
                                 radius: 20,
-                                backgroundImage: Image.asset(
-                                  AssetsData.man,
-                                ).image,
+                                backgroundImage:
+                                    users[index].profileImage.isNotEmpty
+                                    ? NetworkImage(users[index].profileImage)
+                                    : Image.asset(AssetsData.man).image,
                               ),
                               title: Text(
                                 users[index].name,

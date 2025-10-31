@@ -2,11 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserModel {
   final String uid;
-  final String name;
+  String name;
   final String email;
-  final String username;
-  final String profileImage;
-  final String bio;
+  String username;
+  String profileImage;
+  String bio;
   final List<dynamic> followers;
   final List<dynamic> following;
 

@@ -19,10 +19,10 @@ class UsernameTextFormField extends StatelessWidget {
       onSaved: onSaved,
       validator: TextFormFiledValidations.usernameValidation,
       decoration: InputDecoration(
-        prefixIcon: Icon(Icons.person),
+        prefixIcon: const Icon(Icons.person),
         hintText: 'Username',
         labelText: 'Username',
-        labelStyle: TextStyle(color: AppColors.ksecondaryColor),
+        labelStyle: const TextStyle(color: AppColors.ksecondaryColor),
 
         fillColor: AppColors.kWhiteColor,
         filled: true,
@@ -33,7 +33,7 @@ class UsernameTextFormField extends StatelessWidget {
 
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide(color: AppColors.kPrimaryColor),
+          borderSide: const BorderSide(color: AppColors.kPrimaryColor),
         ),
       ),
     );

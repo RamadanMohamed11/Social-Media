@@ -17,8 +17,8 @@ class TabBarWidget extends StatelessWidget {
       indicatorSize: TabBarIndicatorSize.tab,
 
       tabs: [
-        Tab(text: "Photos"),
-        Tab(text: "Posts"),
+        const Tab(text: "Photos"),
+        const Tab(text: "Posts"),
       ],
     );
   }

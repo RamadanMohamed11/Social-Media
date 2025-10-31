@@ -15,9 +15,9 @@ class RegisterNowWidget extends StatelessWidget {
       children: [
         Text(
           isLogin ? "Don't have an account?" : "Already have an account?",
-          style: TextStyle(fontSize: 16),
+          style: const TextStyle(fontSize: 16),
         ),
-        Gap(10),
+        const Gap(10),
         InkWell(
           onTap: () {
             if (isLogin) {
@@ -28,7 +28,10 @@ class RegisterNowWidget extends StatelessWidget {
           },
           child: Text(
             isLogin ? "Register now" : "Login now",
-            style: TextStyle(fontSize: 16, color: AppColors.ksecondaryColor),
+            style: const TextStyle(
+              fontSize: 16,
+              color: AppColors.ksecondaryColor,
+            ),
           ),
         ),
       ],

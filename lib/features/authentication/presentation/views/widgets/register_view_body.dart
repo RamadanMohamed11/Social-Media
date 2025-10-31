@@ -61,30 +61,30 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                 key: _formKey,
                 child: Column(
                   children: [
-                    Logo(),
-                    Gap(20),
-                    Widget0616(),
-                    Gap(30),
+                    const Logo(),
+                    const Gap(20),
+                    const Widget0616(),
+                    const Gap(30),
                     NameTextFormField(
                       controller: nameController,
                       onSaved: nameOnSavedMethod,
                     ),
-                    Gap(20),
+                    const Gap(20),
                     UsernameTextFormField(
                       controller: usernameController,
                       onSaved: usernameOnSavedMethod,
                     ),
-                    Gap(20),
+                    const Gap(20),
                     EmailTextFormField(
                       controller: emailController,
                       onSaved: emailOnSavedMethod,
                     ),
-                    Gap(20),
+                    const Gap(20),
                     PasswordTextFormField(
                       controller: passwordController,
                       onSaved: passwordOnSavedMethod,
                     ),
-                    Gap(30),
+                    const Gap(30),
                     CustomButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
@@ -98,8 +98,8 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                       },
                       text: 'Register',
                     ),
-                    Gap(30),
-                    RegisterNowWidget(isLogin: false),
+                    const Gap(30),
+                    const RegisterNowWidget(isLogin: false),
                   ],
                 ),
               ),

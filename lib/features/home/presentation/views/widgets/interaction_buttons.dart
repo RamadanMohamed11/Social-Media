@@ -28,16 +28,16 @@ class InteractionButtons extends StatelessWidget {
         IconButton(
           onPressed: onLoveTap,
           icon: isLiked
-              ? Icon(Icons.favorite, color: AppColors.kPrimaryColor)
-              : Icon(Icons.favorite_border_outlined),
+              ? const Icon(Icons.favorite, color: AppColors.kPrimaryColor)
+              : const Icon(Icons.favorite_border_outlined),
         ),
         Text(post?.likes.length.toString() ?? "     "),
-        Gap(20),
+        const Gap(20),
         IconButton(
           onPressed: () {
             GoRouter.of(context).push(AppRouter.kCommentView, extra: post);
           },
-          icon: Icon(Icons.comment),
+          icon: const Icon(Icons.comment),
         ),
         Text(post?.comments.length.toString() ?? "     "),
       ],

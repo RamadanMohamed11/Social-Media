@@ -23,7 +23,7 @@ class BioWidget extends StatelessWidget {
                   child: Center(
                     child: Text(
                       userModel.bio,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: AppColors.kPrimaryColor,
                         fontSize: 18,
                       ),
@@ -31,7 +31,7 @@ class BioWidget extends StatelessWidget {
                   ),
                 ),
               )
-            : SizedBox(),
+            : const SizedBox(),
       ],
     );
   }

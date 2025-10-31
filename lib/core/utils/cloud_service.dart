@@ -39,6 +39,10 @@ class CloudService {
     }
   }
 
+  Future<DocumentSnapshot> getDataById({required String docId}) async {
+    return await collectionReference.doc(docId).get();
+  }
+
   Future<DocumentSnapshot> getDocumentById({required String docId}) async {
     return await collectionReference.doc(docId).get();
   }

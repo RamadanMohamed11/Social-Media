@@ -5,6 +5,7 @@ import 'package:social_media/core/models/post_model.dart';
 import 'package:social_media/core/models/user_model.dart';
 import 'package:social_media/core/utils/app_router.dart';
 import 'package:social_media/features/authentication/presentation/view_models/cubit/authentication_cubit.dart';
+import 'package:social_media/features/edit_profile/presentation/view_model/cubit/edit_profile_cubit.dart';
 import 'package:social_media/features/profile/presentation/view_model/cubit/profile_cubit.dart';
 import 'package:social_media/features/profile/presentation/views/widgets/profile_view_body.dart';
 
@@ -22,25 +23,40 @@ class _ProfileViewState extends State<ProfileView> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<ProfileCubit, ProfileState>(
-      listener: (context, state) {
-        if (state is ProfileFailure) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text("Error: ${state.message}")));
-        } else if (state is ProfileCurrentUserLoaded && _shouldNavigateToEdit) {
-          _shouldNavigateToEdit = false;
-          GoRouter.of(
-            context,
-          ).push(AppRouter.kEditProfile, extra: state.userModel);
-        }
-      },
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<ProfileCubit, ProfileState>(
+          listener: (context, state) {
+            if (state is ProfileFailure) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text("Error: ${state.message}")),
+              );
+            } else if (state is ProfileCurrentUserLoaded &&
+                _shouldNavigateToEdit) {
+              _shouldNavigateToEdit = false;
+              GoRouter.of(
+                context,
+              ).push(AppRouter.kEditProfile, extra: state.userModel);
+            }
+          },
+        ),
+        BlocListener<EditProfileCubit, EditProfileState>(
+          listener: (context, state) {
+            if (state is EditProfileSuccess) {
+              // Reload the profile to reflect updated information
+              BlocProvider.of<ProfileCubit>(context).loadCurrentUserProfile();
+            }
+          },
+        ),
+      ],
       child: Scaffold(
         appBar: AppBar(
           title: FittedBox(
             fit: BoxFit.scaleDown,
             child: Text(
-              widget.userModel == null ? "Profile" : "${widget.userModel!.name} Profile",
+              widget.userModel == null
+                  ? "Profile"
+                  : "${widget.userModel!.name} Profile",
             ),
           ),
           surfaceTintColor: Colors.transparent,
