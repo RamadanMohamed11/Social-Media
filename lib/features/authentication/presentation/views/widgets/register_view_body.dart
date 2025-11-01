@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:social_media/constants.dart';
+import 'package:social_media/core/helper/show_dialog.dart';
 import 'package:social_media/features/authentication/presentation/view_models/cubit/authentication_cubit.dart';
 import 'package:social_media/features/authentication/presentation/views/widgets/custom_button.dart';
 import 'package:social_media/features/authentication/presentation/views/widgets/email_text_form_field.dart';
@@ -43,11 +44,36 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
         listener: (context, state) {
           if (state is AuthenticationSignUpSuccess) {
             BlocProvider.of<AuthenticationCubit>(context).emitInitial();
+            // Pop to login screen first
             GoRouter.of(context).pop();
+            // Then show success dialog on login screen
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              // Sign Out
+              BlocProvider.of<AuthenticationCubit>(context).signOut();
+              showMessageDialog(
+                context,
+                true,
+                false,
+                "Account created successfully! Please login to continue.",
+                btnOkOnPress: () {
+                  GoRouter.of(context).pop();
+                  nameController.clear();
+                  usernameController.clear();
+                  emailController.clear();
+                  passwordController.clear();
+                },
+              );
+            });
           } else if (state is AuthenticationFailure) {
-            ScaffoldMessenger.of(
+            showMessageDialog(
               context,
-            ).showSnackBar(SnackBar(content: Text(state.errorMessage)));
+              false,
+              false,
+              state.errorMessage,
+              btnOkOnPress: () {
+                GoRouter.of(context).pop();
+              },
+            );
           }
         },
         builder: (context, state) {

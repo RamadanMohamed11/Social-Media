@@ -58,15 +58,7 @@ class _LoginViewBodyState extends State<LoginViewBody> {
             );
             BlocProvider.of<AuthenticationCubit>(context).emitInitial();
           } else if (state is AuthenticationSignOutSuccess) {
-            showMessageDialog(
-              context,
-              false,
-              true,
-              "User signed out successfully",
-              btnOkOnPress: () {
-                BlocProvider.of<AuthenticationCubit>(context).emitInitial();
-              },
-            );
+            BlocProvider.of<AuthenticationCubit>(context).emitInitial();
           }
         },
         builder: (context, state) {

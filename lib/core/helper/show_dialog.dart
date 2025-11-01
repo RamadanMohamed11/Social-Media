@@ -13,17 +13,17 @@ void showMessageDialog(
     type: isSuccessful
         ? QuickAlertType.success
         : (isSignout)
-            ? QuickAlertType.confirm
-            : QuickAlertType.error,
+        ? QuickAlertType.confirm
+        : QuickAlertType.error,
     title: isSuccessful
         ? "Success"
         : (isSignout)
-            ? "Signout"
-            : "Error",
+        ? "Signout"
+        : "Error",
     text: message,
     confirmBtnText: "Ok",
     onConfirmBtnTap: () {
-      Navigator.of(context).pop();
+      // Navigator.of(context).pop();
       if (btnOkOnPress != null) {
         btnOkOnPress();
       }
