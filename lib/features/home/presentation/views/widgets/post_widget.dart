@@ -63,13 +63,6 @@ class PostWidget extends StatelessWidget {
               maxLines: 2,
             ),
           ),
-          Align(
-            alignment: Alignment.centerRight,
-            child: TextButton(
-              onPressed: () {},
-              child: Text(post != null ? "See More" : "           "),
-            ),
-          ),
           const Gap(10),
           InteractionButtons(
             post: post,

@@ -22,15 +22,58 @@ import 'package:social_media/features/home/presentation/view_model/home_view_cub
 import 'package:social_media/features/search/data/repos/search_repo.dart';
 import 'package:social_media/features/search/presentation/view_model/search_cubit/search_cubit.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'firebase_options.dart';
+
+// Allow overriding the Supabase URL and anon key at build/run time using
+// --dart-define. Defaults are the current values in repository so this
+// change is non-breaking (you asked to keep values unchanged in the repo).
+const String kSupabaseUrl = String.fromEnvironment(
+  'SUPABASE_URL',
+  defaultValue: 'https://bwqiemqchnuwherhpwqd.supabase.co',
+);
+
+const String kSupabaseAnonKey = String.fromEnvironment(
+  'SUPABASE_ANON_KEY',
+  defaultValue: '',
+);
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Supabase.initialize(
-    url: 'https://bwqiemqchnuwherhpwqd.supabase.co',
-    anonKey:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ3cWllbXFjaG51d2hlcmhwd3FkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjAwMzE2MjEsImV4cCI6MjA3NTYwNzYyMX0.uVA4auOVjBn1DJJkduicPPI7VnVI9Tq7dIYmlMYGiKY',
-  );
+
+  // Load local environment (.env) if it exists. Developers should create a
+  // local `.env` file (gitignored) with SUPABASE_ANON_KEY and optionally
+  // SUPABASE_URL while developing. If not present, we fall back to
+  // compile-time --dart-define values (kSupabaseAnonKey) or the hard-coded URL.
+  try {
+    await dotenv.load(fileName: '.env');
+  } catch (_) {
+    // ignore - .env is optional
+  }
+
+  // Access dotenv safely: if dotenv wasn't initialized or the package is not
+  // available, fall back to compile-time values.
+  String? envSupabaseUrl;
+  String? envSupabaseAnonKey;
+  try {
+    envSupabaseUrl = dotenv.env['SUPABASE_URL'];
+    envSupabaseAnonKey = dotenv.env['SUPABASE_ANON_KEY'];
+  } catch (_) {
+    // dotenv not initialized or missing — ignore and use defaults
+    envSupabaseUrl = null;
+    envSupabaseAnonKey = null;
+  }
+
+  final supabaseUrl = (envSupabaseUrl != null && envSupabaseUrl.isNotEmpty)
+      ? envSupabaseUrl
+      : kSupabaseUrl;
+
+  final supabaseAnonKey =
+      (envSupabaseAnonKey != null && envSupabaseAnonKey.isNotEmpty)
+      ? envSupabaseAnonKey
+      : kSupabaseAnonKey;
+
+  await Supabase.initialize(url: supabaseUrl, anonKey: supabaseAnonKey);
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   setupServiceLocator();
 
