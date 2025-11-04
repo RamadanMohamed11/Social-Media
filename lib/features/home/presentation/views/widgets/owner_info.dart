@@ -20,15 +20,25 @@ class OwnerInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ImageProvider<Object>? avatarImage;
+    if (post != null) {
+      final profileImage = postUserModel?.profileImage;
+      if (profileImage != null && profileImage.isNotEmpty) {
+        avatarImage = CachedNetworkImageProvider(profileImage);
+      } else {
+        avatarImage = const AssetImage(AssetsData.man);
+      }
+    } else if (userModel?.profileImage.isNotEmpty ?? false) {
+      avatarImage = CachedNetworkImageProvider(userModel!.profileImage);
+    } else {
+      avatarImage = const AssetImage(AssetsData.man);
+    }
+
     return Row(
       children: [
         CircleAvatar(
           backgroundColor: AppColors.kWhiteColor,
-          backgroundImage: post != null
-              ? (postUserModel!.profileImage.isNotEmpty
-                    ? CachedNetworkImageProvider(postUserModel!.profileImage)
-                    : const AssetImage(AssetsData.man))
-              : null,
+          backgroundImage: avatarImage,
         ),
         const Gap(10),
         Column(
