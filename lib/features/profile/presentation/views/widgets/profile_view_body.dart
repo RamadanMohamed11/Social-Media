@@ -70,15 +70,15 @@ class _ProfileViewBodyState extends State<ProfileViewBody>
             return const Center(child: CircularProgressIndicator());
           }
 
+          final String? loggedInUserId =
+              firebase_auth.FirebaseAuth.instance.currentUser?.uid;
+
           final String currentUserId = state is ProfileCurrentUserLoaded
               ? state.userModel.uid
-              : firebase_auth.FirebaseAuth.instance.currentUser?.uid ??
-                    displayUser.uid;
+              : (loggedInUserId ?? displayUser.uid);
 
           final bool isCurrentUserForButtons =
-              viewingCurrentUser ||
-              (state is ProfileCurrentUserLoaded &&
-                  state.userModel.uid == displayUser.uid);
+              viewingCurrentUser || currentUserId == displayUser.uid;
 
           return Column(
             children: [
