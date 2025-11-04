@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:social_media/core/utils/app_colors.dart';
 
 class EmailTextFormField extends StatelessWidget {
@@ -17,7 +18,20 @@ class EmailTextFormField extends StatelessWidget {
       controller: controller,
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
-        prefixIcon: const Icon(Icons.email),
+        // Wrap the icon with padding and provide constraints so it is
+        // vertically centered inside the field across platforms.
+        prefixIcon: const Padding(
+          padding: EdgeInsets.all(11.0),
+          child: FaIcon(FontAwesomeIcons.envelope),
+        ),
+        prefixIconConstraints: const BoxConstraints(
+          minWidth: 48,
+          minHeight: 48,
+        ),
+        contentPadding: const EdgeInsets.symmetric(
+          vertical: 16,
+          horizontal: 12,
+        ),
         hintText: 'Email',
         labelText: 'Email',
         labelStyle: const TextStyle(color: AppColors.ksecondaryColor),

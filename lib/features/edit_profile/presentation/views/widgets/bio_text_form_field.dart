@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:social_media/core/utils/app_colors.dart';
 
 class BioTextField extends StatelessWidget {
@@ -15,7 +16,14 @@ class BioTextField extends StatelessWidget {
       },
 
       decoration: InputDecoration(
-        prefixIcon: const Icon(Icons.info_outline),
+        prefixIcon: const Padding(
+          padding: EdgeInsets.all(11.0),
+          child: FaIcon(FontAwesomeIcons.circleInfo),
+        ),
+        prefixIconConstraints: const BoxConstraints(
+          minWidth: 48,
+          minHeight: 48,
+        ),
         hintText: 'Bio',
         labelText: 'Bio',
         labelStyle: const TextStyle(color: AppColors.ksecondaryColor),

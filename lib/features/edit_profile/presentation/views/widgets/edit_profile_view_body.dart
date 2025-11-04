@@ -11,6 +11,7 @@ import 'package:social_media/core/utils/assets_data.dart';
 import 'package:social_media/core/utils/image_picker_method.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:redacted/redacted.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:social_media/features/authentication/presentation/views/widgets/custom_button.dart';
 import 'package:social_media/features/authentication/presentation/views/widgets/name_text_form_field.dart';
 import 'package:social_media/features/authentication/presentation/views/widgets/username_text_form_field.dart';
@@ -72,7 +73,9 @@ class _EditProfileViewBodyState extends State<EditProfileViewBody> {
             // Evict from CachedNetworkImage cache
             CachedNetworkImage.evictFromCache(widget.userModel.profileImage);
             // Also evict from Flutter's image cache
-            final imageProvider = CachedNetworkImageProvider(widget.userModel.profileImage);
+            final imageProvider = CachedNetworkImageProvider(
+              widget.userModel.profileImage,
+            );
             imageProvider.evict();
           }
           // Show success message
@@ -126,8 +129,8 @@ class _EditProfileViewBodyState extends State<EditProfileViewBody> {
                                 borderRadius: BorderRadius.circular(12),
                               ),
                             ),
-                            icon: const Icon(
-                              Icons.edit,
+                            icon: const FaIcon(
+                              FontAwesomeIcons.pen,
                               color: AppColors.kWhiteColor,
                             ),
                           ),

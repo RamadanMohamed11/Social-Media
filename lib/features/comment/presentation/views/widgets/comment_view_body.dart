@@ -11,6 +11,7 @@ import 'package:social_media/features/comment/data/models/comment_model.dart';
 import 'package:social_media/features/comment/presentation/view_models/comment_cubit/comment_cubit.dart';
 import 'package:social_media/features/comment/presentation/views/widgets/comment_list_tile.dart';
 import 'package:social_media/features/comment/presentation/views/widgets/comment_text_form_field.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 // import 'package:social_media/features/profile/presentation/view_model/cubit/profile_cubit.dart';
 
 class CommentViewBody extends StatefulWidget {
@@ -96,7 +97,10 @@ class _CommentViewBodyState extends State<CommentViewBody> {
                           // Handle comment submission logic here
                         }
                       },
-                      child: const Icon(Icons.send, size: 27),
+                      child: const FaIcon(
+                        FontAwesomeIcons.paperPlane,
+                        size: 20,
+                      ),
                     ),
                   ],
                 ),

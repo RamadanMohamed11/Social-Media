@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:social_media/core/utils/app_colors.dart';
 
 class SearchTextField extends StatefulWidget {
@@ -34,9 +35,12 @@ class _SearchTextFieldState extends State<SearchTextField> {
       onChanged: widget.onChange,
       controller: widget.controller,
       decoration: InputDecoration(
-        suffixIcon: Icon(
-          Icons.search,
-          color: isTextFieldPressed ? AppColors.kPrimaryColor : Colors.grey,
+        suffixIcon: Padding(
+          padding: const EdgeInsets.all(11.0),
+          child: FaIcon(
+            FontAwesomeIcons.magnifyingGlass,
+            color: isTextFieldPressed ? AppColors.kPrimaryColor : Colors.grey,
+          ),
         ),
         hintText: 'Search by username',
         fillColor: AppColors.kWhiteColor,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:social_media/core/models/post_model.dart';
 import 'package:social_media/core/models/user_model.dart';
@@ -65,7 +66,7 @@ class _ProfileViewState extends State<ProfileView> {
           actions: [
             IconButton(
               icon: widget.userModel == null
-                  ? const Icon(Icons.edit)
+                  ? const FaIcon(FontAwesomeIcons.pen)
                   : const SizedBox(),
               onPressed: () async {
                 _shouldNavigateToEdit = true;
@@ -76,7 +77,7 @@ class _ProfileViewState extends State<ProfileView> {
             ),
             IconButton(
               icon: widget.userModel == null
-                  ? const Icon(Icons.logout)
+                  ? const FaIcon(FontAwesomeIcons.rightFromBracket)
                   : const SizedBox(),
               onPressed: () async {
                 await BlocProvider.of<AuthenticationCubit>(context).signOut();

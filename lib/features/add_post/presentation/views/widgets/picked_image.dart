@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class PickedImage extends StatefulWidget {
   const PickedImage({super.key, required this.image, required this.onPressed});
@@ -31,7 +32,7 @@ class _PickedImageState extends State<PickedImage> {
           left: 0,
           child: IconButton(
             onPressed: widget.onPressed,
-            icon: const Icon(Icons.close, size: 30, color: Colors.red),
+            icon: const FaIcon(FontAwesomeIcons.xmark, size: 30, color: Colors.red),
           ),
         ),
       ],

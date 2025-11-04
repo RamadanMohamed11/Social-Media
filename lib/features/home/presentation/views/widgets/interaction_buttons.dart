@@ -4,6 +4,7 @@ import 'package:social_media/core/models/post_model.dart';
 import 'package:gap/gap.dart';
 import 'package:social_media/core/utils/app_colors.dart';
 import 'package:social_media/core/utils/app_router.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class InteractionButtons extends StatelessWidget {
   const InteractionButtons({
@@ -28,8 +29,11 @@ class InteractionButtons extends StatelessWidget {
         IconButton(
           onPressed: onLoveTap,
           icon: isLiked
-              ? const Icon(Icons.favorite, color: AppColors.kPrimaryColor)
-              : const Icon(Icons.favorite_border_outlined),
+              ? const FaIcon(
+                  FontAwesomeIcons.solidHeart,
+                  color: AppColors.kPrimaryColor,
+                )
+              : const FaIcon(FontAwesomeIcons.heart),
         ),
         Text(post?.likes.length.toString() ?? "     "),
         const Gap(20),
@@ -37,7 +41,7 @@ class InteractionButtons extends StatelessWidget {
           onPressed: () {
             GoRouter.of(context).push(AppRouter.kCommentView, extra: post);
           },
-          icon: const Icon(Icons.comment),
+          icon: const FaIcon(FontAwesomeIcons.comment),
         ),
         Text(post?.comments.length.toString() ?? "     "),
       ],

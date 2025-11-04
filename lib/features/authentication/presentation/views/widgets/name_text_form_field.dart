@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:social_media/core/helper/text_form_filed_validations.dart';
 import 'package:social_media/core/utils/app_colors.dart';
 
@@ -19,7 +20,10 @@ class NameTextFormField extends StatelessWidget {
       controller: controller,
       onSaved: onSaved,
       decoration: InputDecoration(
-        prefixIcon: const Icon(Icons.person),
+        prefixIcon: const Padding(
+          padding: EdgeInsets.all(11.0),
+          child: FaIcon(FontAwesomeIcons.user),
+        ),
         hintText: 'Name',
         labelText: 'Name',
         labelStyle: const TextStyle(color: AppColors.ksecondaryColor),

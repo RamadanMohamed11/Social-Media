@@ -5,6 +5,7 @@ import 'package:social_media/core/models/post_model.dart';
 import 'package:social_media/core/models/user_model.dart';
 import 'package:social_media/core/utils/app_colors.dart';
 import 'package:social_media/features/home/presentation/views/widgets/interaction_buttons.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:social_media/features/home/presentation/views/widgets/owner_info.dart';
 import 'package:social_media/features/home/presentation/views/widgets/posted_image.dart';
 
@@ -96,10 +97,10 @@ class PostWidget extends StatelessWidget {
                 top: 10,
                 right: 10,
                 child: IconButton(
-                  icon: const Icon(
-                    Icons.close,
+                  icon: const FaIcon(
+                    FontAwesomeIcons.xmark,
                     color: AppColors.kWhiteColor,
-                    size: 30,
+                    size: 26,
                   ),
                   onPressed: () => Navigator.pop(context),
                 ),

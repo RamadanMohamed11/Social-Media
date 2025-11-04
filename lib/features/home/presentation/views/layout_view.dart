@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:social_media/core/models/user_model.dart';
 import 'package:social_media/core/utils/app_colors.dart';
@@ -104,35 +105,35 @@ class _LayoutViewState extends State<LayoutView> {
                     },
                     destinations: [
                       const NavigationDestination(
-                        icon: Icon(Icons.home),
-                        selectedIcon: Icon(
-                          Icons.home,
+                        icon: FaIcon(FontAwesomeIcons.house),
+                        selectedIcon: FaIcon(
+                          FontAwesomeIcons.house,
                           color: AppColors.kPrimaryColor,
                         ),
                         label: "Home",
                       ),
                       const NavigationDestination(
-                        icon: Icon(Icons.add),
-                        selectedIcon: Icon(
-                          Icons.add,
+                        icon: FaIcon(FontAwesomeIcons.plus),
+                        selectedIcon: FaIcon(
+                          FontAwesomeIcons.plus,
                           color: AppColors.kPrimaryColor,
                         ),
 
                         label: "Add",
                       ),
                       const NavigationDestination(
-                        icon: Icon(Icons.search),
+                        icon: FaIcon(FontAwesomeIcons.magnifyingGlass),
 
-                        selectedIcon: Icon(
-                          Icons.search,
+                        selectedIcon: FaIcon(
+                          FontAwesomeIcons.magnifyingGlass,
                           color: AppColors.kPrimaryColor,
                         ),
                         label: "Search",
                       ),
                       const NavigationDestination(
-                        icon: Icon(Icons.person),
-                        selectedIcon: Icon(
-                          Icons.person,
+                        icon: FaIcon(FontAwesomeIcons.user),
+                        selectedIcon: FaIcon(
+                          FontAwesomeIcons.user,
                           color: AppColors.kPrimaryColor,
                         ),
 

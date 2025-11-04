@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:social_media/core/utils/app_colors.dart';
 
 class PickImageButton extends StatelessWidget {
@@ -13,8 +14,8 @@ class PickImageButton extends StatelessWidget {
         backgroundColor: AppColors.ksecondaryColor,
       ),
       onPressed: onPressed,
-      child: const Icon(
-        Icons.camera_alt_outlined,
+      child: const FaIcon(
+        FontAwesomeIcons.camera,
         color: AppColors.kWhiteColor,
         size: 25,
       ),

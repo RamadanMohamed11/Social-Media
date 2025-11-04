@@ -5,6 +5,7 @@ import 'package:social_media/core/utils/app_colors.dart';
 import 'package:gap/gap.dart';
 import 'package:social_media/core/utils/authentication_service.dart';
 import 'package:social_media/core/utils/service_locator.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:social_media/features/profile/presentation/view_model/cubit/profile_cubit.dart';
 
 class UserInfoAndContactButtons extends StatefulWidget {
@@ -113,7 +114,7 @@ class _UserInfoAndContactButtonsState extends State<UserInfoAndContactButtons> {
                                   : "Follow",
                             ),
                             const Gap(5),
-                            const Icon(Icons.add),
+                            const FaIcon(FontAwesomeIcons.userPlus),
                           ],
                         ),
                       ),

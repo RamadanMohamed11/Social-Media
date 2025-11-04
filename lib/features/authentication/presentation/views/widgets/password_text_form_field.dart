@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:social_media/core/utils/app_colors.dart';
 
 class PasswordTextFormField extends StatefulWidget {
@@ -24,13 +25,27 @@ class _PasswordTextFormFieldState extends State<PasswordTextFormField> {
       onSaved: widget.onSaved,
       controller: widget.controller,
       decoration: InputDecoration(
-        prefixIcon: const Icon(Icons.password),
+        // Center the lock icon vertically.
+        prefixIcon: const Padding(
+          padding: EdgeInsets.all(11.0),
+          child: FaIcon(FontAwesomeIcons.lock),
+        ),
+        prefixIconConstraints: const BoxConstraints(
+          minWidth: 48,
+          minHeight: 48,
+        ),
+        contentPadding: const EdgeInsets.symmetric(
+          vertical: 16,
+          horizontal: 12,
+        ),
         suffixIcon: IconButton(
           onPressed: () {
             isObsecure = !isObsecure;
             setState(() {});
           },
-          icon: Icon(isObsecure ? Icons.visibility : Icons.visibility_off),
+          icon: FaIcon(
+            isObsecure ? FontAwesomeIcons.eye : FontAwesomeIcons.eyeSlash,
+          ),
         ),
         hintText: 'Password',
         labelText: 'Password',
