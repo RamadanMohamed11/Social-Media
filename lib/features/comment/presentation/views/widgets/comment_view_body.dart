@@ -25,11 +25,13 @@ class CommentViewBody extends StatefulWidget {
 class _CommentViewBodyState extends State<CommentViewBody> {
   late TextEditingController _commentController;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  late final ScrollController _scrollController;
 
   @override
   void initState() {
     super.initState();
     _commentController = TextEditingController();
+    _scrollController = ScrollController();
   }
 
   @override
@@ -51,6 +53,7 @@ class _CommentViewBodyState extends State<CommentViewBody> {
               children: [
                 Expanded(
                   child: ListView.builder(
+                    controller: _scrollController,
                     itemCount: widget.postModel.comments.length,
                     // itemCount: 10,
                     itemBuilder: (context, index) {
@@ -94,6 +97,16 @@ class _CommentViewBodyState extends State<CommentViewBody> {
                           BlocProvider.of<CommentCubit>(
                             context,
                           ).addComment(postModel: widget.postModel);
+                          await Future.delayed(
+                            const Duration(milliseconds: 100),
+                          );
+                          if (_scrollController.hasClients) {
+                            _scrollController.animateTo(
+                              _scrollController.position.maxScrollExtent,
+                              duration: const Duration(milliseconds: 300),
+                              curve: Curves.easeOut,
+                            );
+                          }
                           // Handle comment submission logic here
                         }
                       },
@@ -115,6 +128,7 @@ class _CommentViewBodyState extends State<CommentViewBody> {
   @override
   void dispose() {
     _commentController.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
