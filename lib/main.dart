@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:go_router/go_router.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_media/core/models/user_model.dart';
 import 'package:social_media/core/utils/app_router.dart';
@@ -38,6 +41,23 @@ const String kSupabaseAnonKey = String.fromEnvironment(
   defaultValue: '',
 );
 
+Future<void> _loadEnvFileIfAvailable() async {
+  const envAssetKey = '.env';
+
+  try {
+    final manifestContent = await rootBundle.loadString('AssetManifest.json');
+    final manifestMap = jsonDecode(manifestContent) as Map<String, dynamic>;
+
+    if (manifestMap.containsKey(envAssetKey)) {
+      await dotenv.load(fileName: envAssetKey);
+    }
+  } on FlutterError {
+    // Asset manifest is not available (e.g. unit tests) – skip .env loading.
+  } catch (error) {
+    debugPrint('Skipping optional .env load: $error');
+  }
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -45,11 +65,7 @@ void main() async {
   // local `.env` file (gitignored) with SUPABASE_ANON_KEY and optionally
   // SUPABASE_URL while developing. If not present, we fall back to
   // compile-time --dart-define values (kSupabaseAnonKey) or the hard-coded URL.
-  try {
-    await dotenv.load(fileName: '.env');
-  } catch (_) {
-    // ignore - .env is optional
-  }
+  await _loadEnvFileIfAvailable();
 
   // Access dotenv safely: if dotenv wasn't initialized or the package is not
   // available, fall back to compile-time values.
@@ -72,6 +88,11 @@ void main() async {
       (envSupabaseAnonKey != null && envSupabaseAnonKey.isNotEmpty)
       ? envSupabaseAnonKey
       : kSupabaseAnonKey;
+
+  assert(
+    supabaseAnonKey.isNotEmpty,
+    'SUPABASE_ANON_KEY is missing. Set it via .env or --dart-define before running the app.',
+  );
 
   await Supabase.initialize(url: supabaseUrl, anonKey: supabaseAnonKey);
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);

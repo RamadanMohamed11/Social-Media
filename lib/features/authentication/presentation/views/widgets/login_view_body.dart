@@ -76,8 +76,6 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                         children: [
                           const Logo(),
                           const Gap(20),
-                          const Widget0616(),
-                          const Gap(20),
                           const Text(
                             'Welcome Back',
                             style: TextStyle(fontSize: 24),

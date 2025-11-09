@@ -88,8 +88,6 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                 child: Column(
                   children: [
                     const Logo(),
-                    const Gap(20),
-                    const Widget0616(),
                     const Gap(30),
                     NameTextFormField(
                       controller: nameController,

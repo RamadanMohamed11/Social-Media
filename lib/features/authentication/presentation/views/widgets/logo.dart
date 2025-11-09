@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:social_media/core/utils/app_colors.dart';
 import 'package:social_media/core/utils/assets_data.dart';
 
@@ -8,14 +7,13 @@ class Logo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: SvgPicture.asset(
-        AssetsData.nLogo,
-        width: 150,
-        height: 150,
-        colorFilter: const ColorFilter.mode(
-          AppColors.kPrimaryColor,
-          BlendMode.srcIn,
+    return const Center(
+      child: CircleAvatar(
+        radius: 117,
+        backgroundColor: AppColors.ksecondaryColor,
+        child: CircleAvatar(
+          radius: 115,
+          backgroundImage: AssetImage(AssetsData.icon),
         ),
       ),
     );
